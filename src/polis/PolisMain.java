@@ -2,19 +2,19 @@ package polis;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import polis.panes.PolisPane;
 
-public class Main extends Application {
-
+public class PolisMain extends Application {
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception {
 
-        // Hier aanvullen, je wil wellicht niet gewoon maar een HBox tonen?
-        Scene scene = new Scene (new HBox());
+        Scene scene = new Scene(new PolisPane(), 1080, 607);
+
         stage.setScene(scene);
+
         stage.setTitle("Polis - 2021 © Universiteit Gent");
         stage.show();
     }
-
 }
