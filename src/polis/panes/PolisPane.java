@@ -2,7 +2,7 @@ package polis.panes;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import polis.panes.custom.PlayButton;
+import polis.panes.buttons.PlayButton;
 import prog2.util.Viewport;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class PolisPane extends Pane {
     Buttons buttons = new Buttons();
     Game game = new Game(buttons);
     Viewport viewport = new Viewport(game, 0.5);
-    Button play = new PlayButton();
+    Button play = new PlayButton(game);
 
     public PolisPane() throws IOException {
         setStyle("-fx-background-color: beige");

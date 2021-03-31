@@ -1,4 +1,4 @@
-package polis.panes.custom;
+package polis.panes.buttons;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -10,10 +10,12 @@ import java.io.FileNotFoundException;
 
 public class BuildButton extends Button {
 
-    String type;
+    String ctype;
+    String btype;
 
-    public BuildButton(String picture, String type, Buttons buttons) throws FileNotFoundException {
-        this.type = type;
+    public BuildButton(String picture, String ctype, String btype, Buttons buttons) throws FileNotFoundException {
+        this.ctype = ctype;
+        this.btype = btype;
         this.setMinSize(70,70);
         this.setFocusTraversable(false);
         FileInputStream input = new FileInputStream("resources/polis/buttons/" + picture);
@@ -21,8 +23,6 @@ public class BuildButton extends Button {
         ImageView imageView = new ImageView(image);
         this.setGraphic(imageView);
 
-        this.setOnAction(e -> {
-            buttons.setStatus(type);
-        });
+        this.setOnAction(e -> buttons.setStatus(ctype, btype));
     }
 }

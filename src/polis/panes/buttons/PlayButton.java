@@ -1,8 +1,9 @@
-package polis.panes.custom;
+package polis.panes.buttons;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import polis.panes.Game;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,8 +13,11 @@ import java.util.Queue;
 public class PlayButton extends Button {
 
     private final Queue<String> pics;
+    private Game game;
 
-    public PlayButton() throws FileNotFoundException {
+    public PlayButton(Game game) throws FileNotFoundException {
+        this.game = game;
+
         setMaxSize(50,60);
         setFocusTraversable(false);
         setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/play.png"))));

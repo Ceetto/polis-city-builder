@@ -3,20 +3,21 @@ package polis.panes;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import polis.panes.custom.BuildButton;
+import polis.panes.buttons.BuildButton;
 
 import java.io.FileNotFoundException;
 
 public class Buttons extends GridPane {
 
-    Button resident = new BuildButton("residence.png", "lbuild", this);
-    Button industry = new BuildButton("industry.png", "lbuild", this);
-    Button commerce = new BuildButton("commerce.png", "lbuild", this);
-    Button road = new BuildButton("road.png", "sbuild", this);
-    Button buildozer = new BuildButton("bulldozer.png", "del", this);
-    Button select = new BuildButton("selection.png", "select", this);
+    Button resident = new BuildButton("residence.png", "lbuild", "res", this);
+    Button industry = new BuildButton("industry.png", "lbuild", "ind", this);
+    Button commerce = new BuildButton("commerce.png", "lbuild", "com", this);
+    Button road = new BuildButton("road.png", "sbuild", "road", this);
+    Button buildozer = new BuildButton("bulldozer.png", "del", "del", this);
+    Button select = new BuildButton("selection.png", "select", "sel", this);
 
-    String status = "select";
+    String cstatus = "select";
+    String bstatus;
 
     public Buttons() throws FileNotFoundException {
         setAlignment(Pos.TOP_LEFT);
@@ -34,11 +35,16 @@ public class Buttons extends GridPane {
 
     }
 
-    public void setStatus(String satus){
-        this.status = satus;
+    public void setStatus(String cstatus, String bstatus){
+        this.cstatus = cstatus;
+        this.bstatus = bstatus;
     }
 
-    public String getStatus(){
-        return status;
+    public String getCstatus(){
+        return cstatus;
+    }
+
+    public String getBstatus(){
+        return bstatus;
     }
 }
