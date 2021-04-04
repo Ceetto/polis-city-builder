@@ -20,15 +20,6 @@ public class mouseListener extends Pane {
             }
         });
 
-//        setOnMousePressed(game::dragStart);
-//        setOnMouseDragged(game::dragging);
-//        setOnMouseReleased(e -> {
-//            try {
-//                game.dragEnd(e);
-//            } catch (FileNotFoundException fileNotFoundException) {
-//                fileNotFoundException.printStackTrace();
-//            }
-//        });
 
         setOnDragDetected(e -> {
             startFullDrag();
@@ -38,7 +29,7 @@ public class mouseListener extends Pane {
         setOnMouseDragged(game::dragging);
         setOnMouseDragExited(e -> {
             try {
-                game.dragEnd(e);
+                game.dragEnd();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }

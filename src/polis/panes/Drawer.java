@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 public class Drawer extends StackPane {
 
     protected final int CELL_SIZE = 64;
-    protected final int DIM = 16;
+    protected final int DIM = 100;
 
     public void addPoly(int r, int k, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth){
         Polygon poly = new Polygon(
@@ -35,23 +35,20 @@ public class Drawer extends StackPane {
         pane.getChildren().add(poly);
     }
 
-    public void addRoadTile(int r, int k, Pane pane, int level) throws FileNotFoundException {
+    public void addRoadTile(RoadTile tile, Pane pane) throws FileNotFoundException {
 
-        int x = CELL_SIZE * (- r + k) ;
-        int y = CELL_SIZE * (r + k) / 2;
-        RoadTile tile = new RoadTile(r, k);
+        int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
+        int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
         tile.setTranslateX(x);
         tile.setTranslateY(y);
 
-        tile.setVisual(level);
         pane.getChildren().add(tile);
     }
 
-    public void addBuildingTile(int r, int k, Pane pane, String image) throws FileNotFoundException {
+    public void addBuildingTile(BuildingTile tile, Pane pane) throws FileNotFoundException {
 
-        int x = CELL_SIZE * (- r + k) ;
-        int y = CELL_SIZE * (r + k) / 2;
-        ImageView tile = new BuildingTile(image, r, k);
+        int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
+        int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
         tile.setTranslateX(x);
         tile.setTranslateY(y);
 

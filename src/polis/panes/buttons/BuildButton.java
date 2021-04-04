@@ -1,6 +1,8 @@
 package polis.panes.buttons;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import polis.panes.Buttons;
@@ -8,7 +10,7 @@ import polis.panes.Buttons;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class BuildButton extends Button {
+public class BuildButton extends ToggleButton {
 
     String ctype;
     String btype;
@@ -23,6 +25,11 @@ public class BuildButton extends Button {
         ImageView imageView = new ImageView(image);
         this.setGraphic(imageView);
 
-        this.setOnAction(e -> buttons.setStatus(ctype, btype));
+        this.setOnAction(e -> {
+            buttons.setStatus(ctype, btype);
+            buttons.setUnselected(this);
+        });
     }
+
+
 }

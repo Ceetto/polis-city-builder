@@ -32,7 +32,6 @@ public class Game extends Drawer {
     public void clicked() throws FileNotFoundException {
         if(buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
             tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn());
-            tiles.drawTiles();
         } else if(buttons.getCstatus().equals("del")){
             tiles.removeTile(cursor.getRow(), cursor.getColumn());
         }
@@ -80,7 +79,6 @@ public class Game extends Drawer {
                 size = 1;
             }
 
-
             int r = sdr;
             int c = sdc;
 
@@ -107,17 +105,12 @@ public class Game extends Drawer {
         }
     }
 
-    public void dragEnd(MouseEvent e) throws FileNotFoundException {
-        System.out.println(coords);
-        for (Coord coord:coords){
-            System.out.println(coord.getR() + ", " + coord.getC());
-        }
+    public void dragEnd() throws FileNotFoundException {
 
         if (buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
             for (Coord tile : coords) {
                 tiles.addTile(buttons.getBstatus(), tile.getR(), tile.getC());
             }
         }
-        tiles.drawTiles();
     }
 }

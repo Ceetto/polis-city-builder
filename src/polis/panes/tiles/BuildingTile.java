@@ -2,6 +2,7 @@ package polis.panes.tiles;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,6 +32,10 @@ public class BuildingTile extends ImageView {
             level++;
             setImage(new Image(new FileInputStream("resources/polis/tiles/" + type + "-" + level + ".png")));
         }
+    }
+
+    public void deleteBuilding(Pane pane){
+        pane.getChildren().remove(this);
     }
 
     public int getR() {
