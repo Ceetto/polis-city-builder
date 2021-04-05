@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class RoadTile extends ImageView implements Comparable<RoadTile> {
+public class RoadTile extends ImageView {
     private final int r;
     private final int c;
     private int level;
@@ -46,15 +46,6 @@ public class RoadTile extends ImageView implements Comparable<RoadTile> {
 
     public int getC() {
         return c;
-    }
-
-    @Override
-    public int compareTo(RoadTile o) {
-        if (getR() == o.getR()){
-            return getC() - o.getC();
-        }else {
-            return getR() - o.getR();
-        }
     }
 
 }

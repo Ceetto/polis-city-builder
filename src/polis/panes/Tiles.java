@@ -21,7 +21,6 @@ public class Tiles extends Drawer {
     List<BuildingTile> buildingTiles = new ArrayList<>();
 
     public Tiles(){
-        Collections.sort(roadTiles);
         setAlignment(Pos.TOP_CENTER);
     }
 
@@ -53,15 +52,21 @@ public class Tiles extends Drawer {
         }
     }
 
-    public void removeTile(int r, int c){
+    public void removeTile(int r, int c) throws FileNotFoundException {
         int index = 0;
         boolean found = false;
         while(!found && index < roadTiles.size()){
             if(roadTiles.get(index).getR() == r && roadTiles.get(index).getC() == c){
                 found = true;
+                roadsPlaced[r][c] = 0;
+                for(RoadTile tile:roadTiles){
+                    if(Math.abs(roadTiles.get(index).getR() - tile.getR()) <= 1 && Math.abs(roadTiles.get(index).getC() - tile.getC()) <= 1){
+                        tile.updateLevel(roadsPlaced, DIM);
+                    }
+                }
                 roadTiles.get(index).deleteRoad(this);
                 roadTiles.remove(index);
-                roadsPlaced[r][c] = 0;
+
                 setSpot(r,c,1,0);
             }
             index++;
@@ -77,6 +82,27 @@ public class Tiles extends Drawer {
                 setSpot(buildingTiles.get(index).getR(),buildingTiles.get(index).getC(),2,0);
                 buildingTiles.get(index).deleteBuilding(this);
                 buildingTiles.remove(index);
+            }
+            index++;
+        }
+    }
+
+    public void levelUpTile(int r, int c) throws FileNotFoundException {
+        int index = 0;
+        boolean found = false;
+        while(!found && index < buildingTiles.size()){
+            if((buildingTiles.get(index).getR() == r && buildingTiles.get(index).getC() == c)
+                    || (buildingTiles.get(index).getR() == r-1 && buildingTiles.get(index).getC() == c)
+                    || (buildingTiles.get(index).getR() == r && buildingTiles.get(index).getC() == c-1)
+                    || (buildingTiles.get(index).getR() == r-1 && buildingTiles.get(index).getC() == c-1)
+            ){
+                found = true;
+                BuildingTile evolved = buildingTiles.get(index);
+                evolved.levelUp();
+                buildingTiles.get(index).deleteBuilding(this);
+                buildingTiles.remove(index);
+                buildingTiles.add(evolved);
+                addBuildingTile(evolved, this);
             }
             index++;
         }

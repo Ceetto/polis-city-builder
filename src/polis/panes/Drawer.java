@@ -1,6 +1,5 @@
 package polis.panes;
 
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -8,12 +7,10 @@ import javafx.scene.shape.Polygon;
 import polis.panes.tiles.BuildingTile;
 import polis.panes.tiles.RoadTile;
 
-import java.io.FileNotFoundException;
-
 public class Drawer extends StackPane {
 
     protected final int CELL_SIZE = 64;
-    protected final int DIM = 100;
+    protected final int DIM = 32;
 
     public void addPoly(int r, int k, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth){
         Polygon poly = new Polygon(
@@ -35,7 +32,7 @@ public class Drawer extends StackPane {
         pane.getChildren().add(poly);
     }
 
-    public void addRoadTile(RoadTile tile, Pane pane) throws FileNotFoundException {
+    public void addRoadTile(RoadTile tile, Pane pane) {
 
         int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
         int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
@@ -45,12 +42,14 @@ public class Drawer extends StackPane {
         pane.getChildren().add(tile);
     }
 
-    public void addBuildingTile(BuildingTile tile, Pane pane) throws FileNotFoundException {
+    public void addBuildingTile(BuildingTile tile, Pane pane) {
 
         int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
         int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
-        tile.setTranslateX(x);
-        tile.setTranslateY(y);
+//        tile.setX(-0.5 * tile.getPicture().getWidth());
+//        tile.setY(0.5 * (tile.getPicture().getWidth() - tile.getPicture().getHeight()));
+        tile.setTranslateX(x + tile.getDx());
+        tile.setTranslateY(y + tile.getDy());
 
         pane.getChildren().add(tile);
     }

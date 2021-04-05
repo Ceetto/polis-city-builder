@@ -17,6 +17,7 @@ public class Cursor extends Drawer {
 
     public Cursor(Tiles tiles){
         setAlignment(Pos.TOP_CENTER);
+
         setPrefSize(CELL_SIZE*2*DIM,CELL_SIZE*DIM);
 
         this.tiles = tiles;
