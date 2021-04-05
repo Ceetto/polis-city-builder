@@ -12,7 +12,7 @@ public class Drawer extends StackPane {
     protected final int CELL_SIZE = 64;
     protected final int DIM = 32;
 
-    public void addPoly(int r, int k, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth){
+    public void addPoly(int r, int k, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth, Cursor cursor){
         Polygon poly = new Polygon(
                 0, 0,
                 CELL_SIZE * size, 0.5 * CELL_SIZE * size,
@@ -29,7 +29,10 @@ public class Drawer extends StackPane {
         poly.setTranslateX(x);
         poly.setTranslateY(y);
 
+        poly.setViewOrder(-r - k - size);
+
         pane.getChildren().add(poly);
+        cursor.getCursorTiles().add(poly);
     }
 
     public void addRoadTile(RoadTile tile, Pane pane) {
@@ -46,8 +49,7 @@ public class Drawer extends StackPane {
 
         int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
         int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
-//        tile.setX(-0.5 * tile.getPicture().getWidth());
-//        tile.setY(0.5 * (tile.getPicture().getWidth() - tile.getPicture().getHeight()));
+
         tile.setTranslateX(x + tile.getDx());
         tile.setTranslateY(y + tile.getDy());
 

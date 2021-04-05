@@ -18,7 +18,7 @@ public class BuildButton extends ToggleButton {
     public BuildButton(String picture, String ctype, String btype, Buttons buttons) throws FileNotFoundException {
         this.ctype = ctype;
         this.btype = btype;
-        this.setMinSize(70,70);
+        this.setMinSize(70,40);
         this.setFocusTraversable(false);
         FileInputStream input = new FileInputStream("resources/polis/buttons/" + picture);
         Image image = new Image(input);

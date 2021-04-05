@@ -30,20 +30,10 @@ public class BuildingTile extends ImageView {
 
     public void setVisual(String picture) throws FileNotFoundException {
         image = new Image(new FileInputStream("resources/polis/tiles/" + picture));
-
-        System.out.println("dimensies");
-        System.out.println(image.getWidth() + ", " + image.getHeight());
         dx = -0.5 * image.getWidth() + image.getWidth()/2;
         dy = 0.5 * (image.getWidth() - image.getHeight()) - image.getHeight()/2;
-        System.out.println("referentiepunt:");
-        System.out.println(getX() + ", " + getY());
-        System.out.println("place:");
-        System.out.println(getTranslateX() + ", " + getTranslateY());
-        System.out.println();
         setImage(image);
         setViewOrder(- r - c - 2.0);
-
-
     }
 
     public void levelUp() throws FileNotFoundException {
