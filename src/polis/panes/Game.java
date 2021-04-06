@@ -1,6 +1,8 @@
 package polis.panes;
 
 import javafx.scene.input.MouseEvent;
+import polis.Sound;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -9,8 +11,10 @@ public class Game extends Drawer {
     Buttons buttons;
     Tiles tiles = new Tiles();
     Cursor cursor = new Cursor(tiles);
+    Sound sound = new Sound();
 
     public Game(Buttons buttons) throws FileNotFoundException {
+
         setPrefSize(CELL_SIZE*2*DIM,CELL_SIZE*DIM);
 
         getChildren().add(new Field());
@@ -34,6 +38,7 @@ public class Game extends Drawer {
         if (!dragging) {
             if (buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
                 tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn(), false);
+                sound.build();
             } else if (buttons.getCstatus().equals("del")) {
                 tiles.removeTile(cursor.getRow(), cursor.getColumn());
             } else if(buttons.getCstatus().equals("select")){
@@ -119,6 +124,9 @@ public class Game extends Drawer {
         if (buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
             for (Coord tile : coords) {
                 tiles.addTile(buttons.getBstatus(), tile.getR(), tile.getC(), false);
+            }
+            for(int i = 0; i < 3; i++){
+                sound.build();
             }
         }
         dragging = false;

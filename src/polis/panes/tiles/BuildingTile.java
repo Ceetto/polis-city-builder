@@ -31,7 +31,7 @@ public class BuildingTile extends Tile {
         if (level < 3) {
             level++;
         } else {
-            level = 0;
+            level = 1;
         }
         setVisual(type + "-" + level + ".png");
     }

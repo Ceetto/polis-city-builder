@@ -1,6 +1,7 @@
 package polis.panes;
 
 import javafx.geometry.Pos;
+import polis.Sound;
 import polis.panes.tiles.BuildingTile;
 import polis.panes.tiles.RoadTile;
 
@@ -19,6 +20,8 @@ public class Tiles extends Drawer {
     int[][] roadsPlaced = new int[DIM][DIM];
     List<RoadTile> roadTiles = new ArrayList<>();
     List<BuildingTile> buildingTiles = new ArrayList<>();
+
+    Sound sound = new Sound();
 
     public Tiles(){
         setAlignment(Pos.TOP_CENTER);
@@ -85,6 +88,8 @@ public class Tiles extends Drawer {
             }
             index++;
         }
+        if (found)
+            sound.delete();
     }
 
     public void levelUpTile(int r, int c) throws FileNotFoundException {
@@ -103,9 +108,11 @@ public class Tiles extends Drawer {
                 buildingTiles.remove(index);
                 buildingTiles.add(evolved);
                 addTile(evolved, this);
+                sound.upgrade();
             }
             index++;
         }
+
     }
 
     public boolean spotFree(int r, int c, int size){
