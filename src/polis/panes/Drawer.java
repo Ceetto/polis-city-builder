@@ -4,13 +4,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import polis.panes.tiles.BuildingTile;
-import polis.panes.tiles.RoadTile;
+import polis.panes.tiles.Tile;
+
+import java.io.FileReader;
+import java.util.Properties;
 
 public class Drawer extends StackPane {
 
     protected final int CELL_SIZE = 64;
-    protected final int DIM = 32;
+    protected int DIM;
+
+    public Drawer() {
+        try(FileReader reader = new FileReader("resources/polis/properties/settings.properties")){
+            Properties props = new Properties();
+            props.load(reader);
+            this.DIM = Integer.parseInt(props.get("field.size").toString());
+        } catch (Exception e){
+            this.DIM = 32;
+            e.printStackTrace();
+        }
+    }
 
     public void addPoly(int r, int k, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth, Cursor cursor){
         Polygon poly = new Polygon(
@@ -32,24 +45,16 @@ public class Drawer extends StackPane {
         poly.setViewOrder(-r - k - size);
 
         pane.getChildren().add(poly);
-        cursor.getCursorTiles().add(poly);
+
+        if(cursor != null) {
+            cursor.getCursorTiles().add(poly);
+        }
     }
 
-    public void addRoadTile(RoadTile tile, Pane pane) {
+    public void addTile(Tile tile, Pane pane) {
 
         int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
         int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
-        tile.setTranslateX(x);
-        tile.setTranslateY(y);
-
-        pane.getChildren().add(tile);
-    }
-
-    public void addBuildingTile(BuildingTile tile, Pane pane) {
-
-        int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
-        int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
-
         tile.setTranslateX(x + tile.getDx());
         tile.setTranslateY(y + tile.getDy());
 

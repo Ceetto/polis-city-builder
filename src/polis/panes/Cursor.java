@@ -68,9 +68,7 @@ public class Cursor extends Drawer {
         }
     }
 
-    public void clear(){
-        getChildren().clear();
-    }
+
 
     public int getRow() {
         return row;
@@ -78,14 +76,6 @@ public class Cursor extends Drawer {
 
     public int getColumn() {
         return column;
-    }
-
-    public double getCx() {
-        return cx;
-    }
-
-    public double getCy() {
-        return cy;
     }
 
     public List<Node> getCursorTiles() {

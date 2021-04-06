@@ -2,23 +2,21 @@ package polis.panes;
 
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
+import polis.panes.tiles.Tile;
+
+import java.io.FileNotFoundException;
 
 public class Field extends Drawer {
 
-    Polygon playingField = new Polygon(
-            0, 0,
-            CELL_SIZE * DIM, 0.5 * CELL_SIZE * DIM,
-            0, CELL_SIZE * DIM,
-            -CELL_SIZE * DIM, 0.5 * CELL_SIZE * DIM
-    );
-
-
-
-    public Field(){
+    public Field() throws FileNotFoundException {
         setAlignment(Pos.TOP_CENTER);
 
-        playingField.setFill(Color.rgb(204,249,170,1));
-        getChildren().add(playingField);
+        for(int r = 0; r<DIM; r++){
+            for(int c = 0; c<DIM; c++){
+                Tile groundTile = new Tile(r, c);
+                groundTile.setGroundImage();
+                addTile(groundTile, this);
+            }
+        }
     }
 }

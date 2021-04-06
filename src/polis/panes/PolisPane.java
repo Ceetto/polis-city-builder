@@ -14,7 +14,7 @@ public class PolisPane extends Pane {
     Button play = new PlayButton(game);
 
     public PolisPane() throws IOException {
-        setStyle("-fx-background-color: beige");
+        setStyle("-fx-background-color: SKYBLUE");
 
         viewport.setSensitiveMargin(50);
         viewport.setFocusTraversable(true);
@@ -28,9 +28,7 @@ public class PolisPane extends Pane {
 
         getChildren().addAll(viewport, buttons, play);
 
-        widthProperty().addListener((obs, oldval, newval) -> {
-            viewport.setPrefWidth((double) newval);
-        });
+        widthProperty().addListener((obs, oldval, newval) -> viewport.setPrefWidth((double) newval));
 
         heightProperty().addListener((obs, oldval, newval) -> {
             viewport.setPrefHeight((double) newval);

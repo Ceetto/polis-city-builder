@@ -24,15 +24,15 @@ public class Tiles extends Drawer {
         setAlignment(Pos.TOP_CENTER);
     }
 
-    public void addTile(String status, int r, int k) throws FileNotFoundException {
+    public void addTile(String status, int r, int k, boolean unbreakable) throws FileNotFoundException {
         if (r >= 0 && r < DIM && k >= 0 && k < DIM) {
             if (status.equals("road")) {
                 if (spotFree(r, k, 1)) {
                     setSpot(r, k, 1, 1);
                     roadsPlaced[r][k] = 1;
-                    RoadTile newTile = new RoadTile(r, k, 0);
+                    RoadTile newTile = new RoadTile(r, k, 0, unbreakable);
                     roadTiles.add(newTile);
-                    addRoadTile(newTile, this);
+                    addTile(newTile, this);
                     newTile.updateLevel(roadsPlaced, DIM);
 
                     for(RoadTile tile:roadTiles){
@@ -45,7 +45,7 @@ public class Tiles extends Drawer {
                 if (spotFree(r, k, 2)) {
                     BuildingTile newTile = new BuildingTile(buildingTypes.get(status), r, k);
                     buildingTiles.add(newTile);
-                    addBuildingTile(newTile, this);
+                    addTile(newTile, this);
                     setSpot(r, k, 2, 1);
                 }
             }
@@ -56,7 +56,7 @@ public class Tiles extends Drawer {
         int index = 0;
         boolean found = false;
         while(!found && index < roadTiles.size()){
-            if(roadTiles.get(index).getR() == r && roadTiles.get(index).getC() == c){
+            if(roadTiles.get(index).getR() == r && roadTiles.get(index).getC() == c && !roadTiles.get(index).isUnbreakable()){
                 found = true;
                 roadsPlaced[r][c] = 0;
                 for(RoadTile tile:roadTiles){
@@ -102,7 +102,7 @@ public class Tiles extends Drawer {
                 buildingTiles.get(index).deleteBuilding(this);
                 buildingTiles.remove(index);
                 buildingTiles.add(evolved);
-                addBuildingTile(evolved, this);
+                addTile(evolved, this);
             }
             index++;
         }

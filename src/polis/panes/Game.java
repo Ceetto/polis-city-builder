@@ -10,7 +10,7 @@ public class Game extends Drawer {
     Tiles tiles = new Tiles();
     Cursor cursor = new Cursor(tiles);
 
-    public Game(Buttons buttons){
+    public Game(Buttons buttons) throws FileNotFoundException {
         setPrefSize(CELL_SIZE*2*DIM,CELL_SIZE*DIM);
 
         getChildren().add(new Field());
@@ -19,6 +19,10 @@ public class Game extends Drawer {
         getChildren().add(new mouseListener(this));
 
         this.buttons = buttons;
+
+        for(int i = 0; i < DIM/2; i++){
+            tiles.addTile("road", i, DIM/2-1, true);
+        }
 
     }
 
@@ -29,7 +33,7 @@ public class Game extends Drawer {
     public void clicked() throws FileNotFoundException {
         if (!dragging) {
             if (buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
-                tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn());
+                tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn(), false);
             } else if (buttons.getCstatus().equals("del")) {
                 tiles.removeTile(cursor.getRow(), cursor.getColumn());
             } else if(buttons.getCstatus().equals("select")){
@@ -114,7 +118,7 @@ public class Game extends Drawer {
     public void dragEnd() throws FileNotFoundException {
         if (buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
             for (Coord tile : coords) {
-                tiles.addTile(buttons.getBstatus(), tile.getR(), tile.getC());
+                tiles.addTile(buttons.getBstatus(), tile.getR(), tile.getC(), false);
             }
         }
         dragging = false;

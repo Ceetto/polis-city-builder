@@ -21,9 +21,7 @@ public class mouseListener extends Pane {
         });
 
 
-        setOnDragDetected(e -> {
-            startFullDrag();
-        });
+        setOnDragDetected(e -> startFullDrag());
 
         setOnMouseDragEntered(game::dragStart);
         setOnMouseDragged(game::dragging);
