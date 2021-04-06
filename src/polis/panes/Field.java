@@ -1,7 +1,6 @@
 package polis.panes;
 
 import javafx.geometry.Pos;
-import javafx.scene.paint.Color;
 import polis.panes.tiles.Tile;
 
 import java.io.FileNotFoundException;

@@ -1,7 +1,6 @@
 package polis.panes.tiles;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.FileInputStream;

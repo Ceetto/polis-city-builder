@@ -36,17 +36,21 @@ public class Game extends Drawer {
 
     public void clicked() throws FileNotFoundException {
         if (!dragging) {
-            if (buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) {
-                tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn(), false);
-                sound.build();
-            } else if (buttons.getCstatus().equals("del")) {
-                tiles.removeTile(cursor.getRow(), cursor.getColumn());
-            } else if(buttons.getCstatus().equals("select")){
-                tiles.levelUpTile(cursor.getRow(), cursor.getColumn());
+            switch (buttons.getCstatus()) {
+                case "sbuild":
+                case "lbuild":
+                    tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn(), false);
+                    sound.build();
+                    break;
+                case "del":
+                    tiles.removeTile(cursor.getRow(), cursor.getColumn());
+                    break;
+                case "select":
+                    tiles.levelUpTile(cursor.getRow(), cursor.getColumn());
+                    break;
             }
         }
     }
-
 
     int sdr;
     int sdc;
@@ -73,24 +77,26 @@ public class Game extends Drawer {
 
 
     public void dragStart(MouseEvent e){
-        sdr = (int) (2 * e.getY() - e.getX() + getWidth() / 2) / (2 * CELL_SIZE);
-        sdc = (int) (e.getX() + 2 * e.getY() - getWidth() / 2) / (2 * CELL_SIZE);
-        dragging = true;
+        if(!dragging) {
+            sdr = (int) (2 * e.getY() - e.getX() + getWidth() / 2) / (2 * CELL_SIZE);
+            sdc = (int) (e.getX() + 2 * e.getY() - getWidth() / 2) / (2 * CELL_SIZE);
+            dragging = true;
+        }
     }
 
     public void dragging(MouseEvent e){
         int er = (int) (2*e.getY() - e.getX() + getWidth()/2) / (2 * CELL_SIZE);
         int ec = (int) (e.getX() + 2*e.getY() - getWidth()/2) / (2 * CELL_SIZE);
 
-        if (sdr >= 0 && sdr < DIM && sdc >= 0 && sdc < DIM && er >= 0 && er < DIM && ec >= 0 && ec < DIM && (
-                buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) && dragging) {
+        int size;
+        if (buttons.getCstatus().equals("lbuild")) {
+            size = 2;
+        } else {
+            size = 1;
+        }
 
-            int size;
-            if (buttons.getCstatus().equals("lbuild")) {
-                size = 2;
-            } else {
-                size = 1;
-            }
+        if (sdr >= 0 && sdr < DIM && sdc >= 0 && sdc < DIM && er >= 0 && er < DIM-size+1 && ec >= 0 && ec < DIM-size+1 && (
+                buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) && dragging) {
 
             int r = sdr;
             int c = sdc;

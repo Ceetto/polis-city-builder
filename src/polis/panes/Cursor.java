@@ -12,8 +12,6 @@ public class Cursor extends Drawer {
 
     private int row;
     private int column;
-    private double cx;
-    private double cy;
     private final Tiles tiles;
 
     private final List<Node> cursorTiles = new ArrayList<>();
@@ -29,8 +27,8 @@ public class Cursor extends Drawer {
 
 
     public void mouseMoved(MouseEvent e, String status){
-        cx = (e.getX() );
-        cy = (e.getY() );
+        double cx = (e.getX());
+        double cy = (e.getY());
         int size;
         if (status.equals("lbuild")){
             size = 2;
@@ -38,8 +36,8 @@ public class Cursor extends Drawer {
             size = 1;
         }
 
-        row = (int) (2*cy - cx + getWidth()/2) / (2 * CELL_SIZE);
-        column = (int) (cx + 2*cy - getWidth()/2) / (2 * CELL_SIZE);
+        row = (int) (2* cy - cx + getWidth()/2) / (2 * CELL_SIZE);
+        column = (int) (cx + 2* cy - getWidth()/2) / (2 * CELL_SIZE);
         if (row >= 0 && row+size-1 < DIM && column >= 0 && column+size-1 < DIM) {
 
             tiles.getChildren().removeAll(cursorTiles);

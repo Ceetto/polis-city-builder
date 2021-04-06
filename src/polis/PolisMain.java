@@ -11,6 +11,8 @@ public class PolisMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setMinHeight(700);
+        stage.setMinWidth(650);
         Scene startScreen = new Scene(new StartPane(stage), 1400, 787.5);
         startScreen.getStylesheets().addAll(getClass().getResource("startScreen/StartPane.css").toExternalForm());
 

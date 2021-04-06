@@ -56,6 +56,9 @@ public class StartPane extends StackPane {
 
                 try (OutputStream output = new FileOutputStream("resources/polis/properties/settings.properties")) {
                     Properties prop = new Properties();
+                    if(Integer.parseInt(sizeInput.getText()) > 69){
+                        sizeInput.setText("69");
+                    }
                     prop.setProperty("field.size", sizeInput.getText());
                     prop.store(output, null);
 
@@ -64,7 +67,7 @@ public class StartPane extends StackPane {
                 }
 
                 sound.click();
-                window.setScene(new Scene(new PolisPane(), 1400, 787.5 ));
+                window.setScene(new Scene(new PolisPane(), window.getWidth(), window.getHeight() ));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
