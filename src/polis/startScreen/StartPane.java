@@ -47,27 +47,36 @@ public class StartPane extends StackPane {
         size.setTranslateX(-50);
         size.getStyleClass().add("outline");
 
+        Label invalid = new Label();
+        invalid.setText("INVALID FIELD SIZE");
+        invalid.getStyleClass().add("error");
+        invalid.setVisible(false);
+
         Button start = new Button();
         start.getStyleClass().add("button");
         start.setText("Create World");
         start.setPrefSize(169,40);
         start.setOnAction(e -> {
             try {
+                if(Integer.parseInt(sizeInput.getText()) > 69 || Integer.parseInt(sizeInput.getText()) <= 0){
+                    System.out.println("invalid field size");
+                    invalid.setVisible(true);
+                } else {
+                    try (OutputStream output = new FileOutputStream("resources/polis/properties/settings.properties")) {
+                        Properties prop = new Properties();
 
-                try (OutputStream output = new FileOutputStream("resources/polis/properties/settings.properties")) {
-                    Properties prop = new Properties();
-                    if(Integer.parseInt(sizeInput.getText()) > 69){
-                        sizeInput.setText("69");
+                        prop.setProperty("field.size", sizeInput.getText());
+                        prop.store(output, null);
+
+
+                    } catch (IOException io) {
+                        io.printStackTrace();
                     }
-                    prop.setProperty("field.size", sizeInput.getText());
-                    prop.store(output, null);
 
-                } catch (IOException io) {
-                    io.printStackTrace();
+
+                    sound.click();
+                    window.setScene(new Scene(new PolisPane(), window.getWidth(), window.getHeight()));
                 }
-
-                sound.click();
-                window.setScene(new Scene(new PolisPane(), window.getWidth(), window.getHeight() ));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -78,6 +87,7 @@ public class StartPane extends StackPane {
             sizeInput.setTranslateY((double)newval/2 + 115);
             size.setTranslateY((double)newval/2 + 100);
             start.setTranslateY((double)newval - 100);
+            invalid.setTranslateY((double)newval/2 + 150);
         });
 
         widthProperty().addListener((obs, oldval, newval) -> {
@@ -85,6 +95,6 @@ public class StartPane extends StackPane {
         });
 
 
-        getChildren().addAll(title, sizeInput, size, start);
+        getChildren().addAll(title, sizeInput, size, start, invalid);
     }
 }

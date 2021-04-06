@@ -1,11 +1,13 @@
-.label{
-    -fx-font-size: 40px;
-}
-
 .outline.label .text{
+    -fx-font-size: 40px;
     -fx-fill: white;
     -fx-stroke: black;
     -fx-stroke-width: 2px;
 }
 
-
+.error.label .text{
+    -fx-font-size: 26;
+    -fx-fill: red;
+    -fx-stroke-width: 1px;
+    -fx-stroke: black;
+}

@@ -8,7 +8,6 @@ import polis.startScreen.StartPane;
 
 public class PolisMain extends Application {
 
-
     @Override
     public void start(Stage stage) throws Exception {
         stage.setMinHeight(700);
@@ -18,12 +17,7 @@ public class PolisMain extends Application {
 
         stage.setScene(startScreen);
 
-
-
         stage.setTitle("Polis - 2021 © Universiteit Gent");
         stage.show();
     }
-
-
-
 }
