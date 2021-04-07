@@ -19,10 +19,10 @@ public class StartPane extends StackPane {
 
     Stage window;
 
-    Sound sound = new Sound();
+    //Sound sound = new Sound();
 
     public StartPane(Stage main) throws FileNotFoundException {
-        sound.mainTheme();
+        //sound.mainTheme();
 
         this.window = main;
 
@@ -74,7 +74,7 @@ public class StartPane extends StackPane {
                     }
 
 
-                    sound.click();
+                    //sound.click();
                     window.setScene(new Scene(new PolisPane(), window.getWidth(), window.getHeight()));
                 }
             } catch (IOException ioException) {
