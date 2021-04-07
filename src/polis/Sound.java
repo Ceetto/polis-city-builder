@@ -20,10 +20,6 @@ public class Sound {
         mainTheme.play();
     }
 
-    public void stop(){
-        mainTheme.stop();
-    }
-
     public void build(){
         Media media = new Media(new File("resources/polis/sfx/build.mp3").toURI().toString());
         AudioClip player = new AudioClip(media.getSource());

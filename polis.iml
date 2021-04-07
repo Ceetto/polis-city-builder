@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/out/production/polis" />
+    <output-test url="file://$MODULE_DIR$/out/test/polis" />
     <exclude-output />
     <javadoc-paths>
       <root url="file://$MODULE_DIR$/../../javafx-sdk-11.0.2" />
@@ -9,9 +11,12 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="JavaFX" level="application" />
     <orderEntry type="library" exported="" name="javafx-sdk-11.0" level="project" />
+    <orderEntry type="library" exported="" name="org.apache.derby:derbyclient:10.14.2.0" level="project" />
+    <orderEntry type="library" exported="" name="org.xerial:sqlite-jdbc:3.25.2" level="project" />
+    <orderEntry type="library" exported="" name="org.jdom:jdom2:2.0.6" level="project" />
   </component>
 </module>
