@@ -2,27 +2,34 @@ package polis.panes;
 
 import javafx.scene.input.MouseEvent;
 import polis.Sound;
+import polis.panes.buttons.SoundButton;
 
 import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Game extends Drawer {
 
+    Sound sound;
     Buttons buttons;
-    Tiles tiles = new Tiles();
-    Cursor cursor = new Cursor(tiles);
-    Sound sound = new Sound();
+    Tiles tiles;
+    Cursor cursor;
 
-    public Game(Buttons buttons) throws FileNotFoundException {
+
+    public Game(Buttons buttons, Sound sound) throws FileNotFoundException {
 
         setPrefSize(CELL_SIZE*2*DIM,CELL_SIZE*DIM);
+
+        this.buttons = buttons;
+        this.sound = sound;
+        this.tiles = new Tiles(sound);
+        this.cursor = new Cursor(tiles);
 
         getChildren().add(new Field());
         getChildren().add(tiles);
         getChildren().add(cursor);
         getChildren().add(new mouseListener(this));
 
-        this.buttons = buttons;
+
 
         for(int i = 0; i < DIM/2; i++){
             tiles.addTile("road", i, DIM/2-1, true);
@@ -107,9 +114,9 @@ public class Game extends Drawer {
         int cr = 0;
         int cc = 0;
         if(cursor.getRow() == DIM -1)
-            cr = 1;
+            cr = size-1;
         if(cursor.getColumn() == DIM -1)
-            cc = 1;
+            cc = size-1;
 
         if (sdr >= 0 && sdr < DIM && sdc >= 0 && sdc < DIM && er >= 0 && er < DIM-size+1 && ec >= 0 && ec < DIM-size+1 && (
                 buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) && dragging) {
@@ -152,5 +159,9 @@ public class Game extends Drawer {
             }
         }
         dragging = false;
+    }
+
+    public Sound getSound() {
+        return sound;
     }
 }

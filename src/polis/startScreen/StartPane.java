@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import polis.Sound;
 import polis.panes.PolisPane;
+import polis.panes.buttons.SoundButton;
 
 import java.io.*;
 import java.util.Properties;
@@ -52,6 +53,8 @@ public class StartPane extends StackPane {
         invalid.getStyleClass().add("error");
         invalid.setVisible(false);
 
+        SoundButton mute = new SoundButton(sound);
+
         Button start = new Button();
         start.getStyleClass().add("button");
         start.setText("Create World");
@@ -73,9 +76,8 @@ public class StartPane extends StackPane {
                         io.printStackTrace();
                     }
 
-
                     sound.click();
-                    window.setScene(new Scene(new PolisPane(), window.getWidth(), window.getHeight()));
+                    window.setScene(new Scene(new PolisPane(mute), window.getWidth(), window.getHeight()));
                 }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
@@ -88,13 +90,14 @@ public class StartPane extends StackPane {
             size.setTranslateY(420);
             start.setTranslateY(520);
             invalid.setTranslateY(480);
+            mute.setTranslateY(10);
         });
 
         widthProperty().addListener((obs, oldval, newval) -> {
-
+            mute.setTranslateX((double)newval/2-50);
         });
 
 
-        getChildren().addAll(title, sizeInput, size, start, invalid);
+        getChildren().addAll(title, sizeInput, size, start, invalid, mute);
     }
 }

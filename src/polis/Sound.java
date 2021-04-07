@@ -2,45 +2,57 @@ package polis;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
 public class Sound {
 
-    AudioClip mainTheme;
+    MediaPlayer mainTheme;
+
+    private boolean mute = false;
 
     public Sound(){
-
+        Media media = new Media(new File("resources/polis/bgm/bgm-1.mp3").toURI().toString());
+        mainTheme = new MediaPlayer(media);
+        mainTheme.setCycleCount(AudioClip.INDEFINITE);
     }
 
     public void mainTheme(){
-        Media media = new Media(new File("resources/polis/bgm/bgm-1.mp3").toURI().toString());
-        mainTheme = new AudioClip(media.getSource());
-        mainTheme.setCycleCount(AudioClip.INDEFINITE);
         mainTheme.play();
     }
 
     public void build(){
-        Media media = new Media(new File("resources/polis/sfx/build.mp3").toURI().toString());
-        AudioClip player = new AudioClip(media.getSource());
-        player.play();
+        sfx("build");
     }
 
     public void delete(){
-        Media media = new Media(new File("resources/polis/sfx/break.mp3").toURI().toString());
-        AudioClip player = new AudioClip(media.getSource());
-        player.play();
+        sfx("break");
     }
 
     public void upgrade(){
-        Media media = new Media(new File("resources/polis/sfx/upgrade.mp3").toURI().toString());
-        AudioClip player = new AudioClip(media.getSource());
-        player.play();
+        sfx("upgrade");
     }
 
     public void click(){
-        Media media = new Media(new File("resources/polis/sfx/click.mp3").toURI().toString());
-        AudioClip player = new AudioClip(media.getSource());
-        player.play();
+        sfx("click");
+    }
+
+    public void sfx(String sfx){
+        if(!mute) {
+            Media media = new Media(new File("resources/polis/sfx/" + sfx + ".mp3").toURI().toString());
+            AudioClip player = new AudioClip(media.getSource());
+            player.play();
+        }
+    }
+
+    public void mute(){
+        if(!mute) {
+            mainTheme.setMute(true);
+            mute = true;
+        }else {
+            mainTheme.setMute(false);
+            mute = false;
+        }
     }
 }

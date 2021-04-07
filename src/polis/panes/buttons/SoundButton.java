@@ -1,35 +1,37 @@
 package polis.panes.buttons;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import polis.panes.Game;
+import polis.Sound;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class PlayButton extends ToggleButton {
+public class SoundButton extends ToggleButton {
+
+    Sound sound;
 
     private final Queue<String> pics;
-    private Game game;
 
-    public PlayButton(Game game) throws FileNotFoundException {
-        this.game = game;
+    public SoundButton(Sound sound) throws FileNotFoundException {
+        this.pics = new LinkedList<>();
+        this.sound = sound;
 
         setMaxSize(50,60);
         setFocusTraversable(false);
-        setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/play.png"))));
+        setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/on.png"))));
 
-        this.pics = new LinkedList<>();
-        pics.add("pause.png");
-        pics.add("play.png");
+        pics.add("mute.png");
+        pics.add("on.png");
+
 
         setOnAction(e -> {
             try {
                 clicked();
+                sound.mute();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -42,4 +44,7 @@ public class PlayButton extends ToggleButton {
         pics.add(next);
     }
 
+    public Sound getSound() {
+        return sound;
+    }
 }

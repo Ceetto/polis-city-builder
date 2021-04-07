@@ -21,9 +21,10 @@ public class Tiles extends Drawer {
     List<RoadTile> roadTiles = new ArrayList<>();
     List<BuildingTile> buildingTiles = new ArrayList<>();
 
-    Sound sound = new Sound();
+    private Sound sound;
 
-    public Tiles(){
+    public Tiles(Sound sound){
+        this.sound = sound;
         setAlignment(Pos.TOP_CENTER);
     }
 
