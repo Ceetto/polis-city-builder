@@ -19,10 +19,10 @@ public class StartPane extends StackPane {
 
     Stage window;
 
-    //Sound sound = new Sound();
+    Sound sound = new Sound();
 
     public StartPane(Stage main) throws FileNotFoundException {
-        //sound.mainTheme();
+        sound.mainTheme();
 
         this.window = main;
 
@@ -74,7 +74,7 @@ public class StartPane extends StackPane {
                     }
 
 
-                    //sound.click();
+                    sound.click();
                     window.setScene(new Scene(new PolisPane(), window.getWidth(), window.getHeight()));
                 }
             } catch (IOException ioException) {
@@ -84,10 +84,10 @@ public class StartPane extends StackPane {
 
 
         heightProperty().addListener((obs, oldval, newval) -> {
-            sizeInput.setTranslateY((double)newval/2 + 115);
-            size.setTranslateY((double)newval/2 + 100);
-            start.setTranslateY((double)newval - 100);
-            invalid.setTranslateY((double)newval/2 + 150);
+            sizeInput.setTranslateY(435);
+            size.setTranslateY(420);
+            start.setTranslateY(520);
+            invalid.setTranslateY(480);
         });
 
         widthProperty().addListener((obs, oldval, newval) -> {

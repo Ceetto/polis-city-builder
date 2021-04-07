@@ -21,7 +21,7 @@ public class Tiles extends Drawer {
     List<RoadTile> roadTiles = new ArrayList<>();
     List<BuildingTile> buildingTiles = new ArrayList<>();
 
-    //Sound sound = new Sound();
+    Sound sound = new Sound();
 
     public Tiles(){
         setAlignment(Pos.TOP_CENTER);
@@ -88,8 +88,8 @@ public class Tiles extends Drawer {
             }
             index++;
         }
-        //if (found)
-            //sound.delete();
+        if (found)
+            sound.delete();
     }
 
     public void levelUpTile(int r, int c) throws FileNotFoundException {
@@ -108,7 +108,7 @@ public class Tiles extends Drawer {
                 buildingTiles.remove(index);
                 buildingTiles.add(evolved);
                 addTile(evolved, this);
-                //sound.upgrade();
+                sound.upgrade();
             }
             index++;
         }
@@ -118,7 +118,7 @@ public class Tiles extends Drawer {
     public boolean spotFree(int r, int c, int size){
         boolean free = true;
         for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
+            for (int j = 0; j< size; j++){
                 if (usedTiles[r + i][c + j] == 1) {
                     free = false;
                     break;

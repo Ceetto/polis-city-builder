@@ -11,7 +11,7 @@ public class Game extends Drawer {
     Buttons buttons;
     Tiles tiles = new Tiles();
     Cursor cursor = new Cursor(tiles);
-    //Sound sound = new Sound();
+    Sound sound = new Sound();
 
     public Game(Buttons buttons) throws FileNotFoundException {
 
@@ -39,17 +39,17 @@ public class Game extends Drawer {
             switch (buttons.getCstatus()) {
                 case "sbuild":
                     tiles.addTile(buttons.getBstatus(), cursor.getRow(), cursor.getColumn(), false);
-                    //sound.build();
+                    sound.build();
                     break;
                 case "lbuild":
                     int cr = 0;
                     int cc = 0;
-                    if(cursor.getRow() == DIM-1)
+                    if(cursor.getRow() == DIM -1)
                         cr = 1;
-                    if(cursor.getColumn() == DIM-1)
+                    if(cursor.getColumn() == DIM -1)
                         cc = 1;
                     tiles.addTile(buttons.getBstatus(), cursor.getRow()-cr, cursor.getColumn()-cc, false);
-                    //sound.build();
+                    sound.build();
                     break;
                 case "del":
                     tiles.removeTile(cursor.getRow(), cursor.getColumn());
@@ -104,18 +104,18 @@ public class Game extends Drawer {
             size = 1;
         }
 
+        int cr = 0;
+        int cc = 0;
+        if(cursor.getRow() == DIM -1)
+            cr = 1;
+        if(cursor.getColumn() == DIM -1)
+            cc = 1;
+
         if (sdr >= 0 && sdr < DIM && sdc >= 0 && sdc < DIM && er >= 0 && er < DIM-size+1 && ec >= 0 && ec < DIM-size+1 && (
                 buttons.getCstatus().equals("sbuild") || buttons.getCstatus().equals("lbuild")) && dragging) {
 
             int r = sdr;
             int c = sdc;
-
-            int rc = 0;
-            int cc = 0;
-            if(er == DIM-1)
-                rc = 1;
-            if(ec == DIM-1)
-                cc = 1;
 
             int rdist = er - sdr;
             int cdist = ec - sdc;
@@ -124,18 +124,18 @@ public class Game extends Drawer {
 
             if (Math.signum(rdist) != 0) {
                 for (int dr = Integer.signum(rdist)*size; Math.abs(dr) <= Math.abs(rdist); dr += Integer.signum(rdist)*size) {
-                    coords.add(new Coord(r-rc, c-cc));
+                    coords.add(new Coord(r-cr, c-cc));
                     r = sdr + dr;
                 }
             }
 
             if (Math.signum(cdist) != 0) {
                 for (int dc = Integer.signum(cdist)*size; Math.abs(dc) <= Math.abs(cdist)+size; dc += Integer.signum(cdist)*size) {
-                    coords.add(new Coord(r-rc, c-cc));
+                    coords.add(new Coord(r-cr, c-cc));
                     c = sdc + dc;
                 }
             } else {
-                coords.add(new Coord(r-rc, c-cc));
+                coords.add(new Coord(r-cr, c-cc));
             }
 
             cursor.drag(coords, size);
@@ -148,7 +148,7 @@ public class Game extends Drawer {
                 tiles.addTile(buttons.getBstatus(), tile.getR(), tile.getC(), false);
             }
             for(int i = 0; i < 3; i++){
-                //sound.build();
+                sound.build();
             }
         }
         dragging = false;
