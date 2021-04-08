@@ -20,7 +20,7 @@ public class RoadTile extends Tile {
     }
 
     public void setVisual() throws FileNotFoundException {
-        setImage(new Image(new FileInputStream("resources/polis/newtiles/road-" + level + ".png")));
+        setImage(new Image("/polis/newtiles/road-" + level + ".png"));
     }
 
     public void updateLevel(int[][] roadsPlaced, int DIM) throws FileNotFoundException {

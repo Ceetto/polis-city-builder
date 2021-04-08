@@ -21,7 +21,7 @@ public class PlayButton extends ToggleButton {
 
         setMaxSize(50,60);
         setFocusTraversable(false);
-        setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/play.png"))));
+        setGraphic(new ImageView(new Image("/polis/buttons/play.png")));
 
         this.pics = new LinkedList<>();
         pics.add("pause.png");
@@ -38,7 +38,7 @@ public class PlayButton extends ToggleButton {
 
     public void clicked() throws FileNotFoundException {
         String next = pics.poll();
-        setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/" + next))));
+        setGraphic(new ImageView(new Image("/polis/buttons/" + next)));
         pics.add(next);
     }
 

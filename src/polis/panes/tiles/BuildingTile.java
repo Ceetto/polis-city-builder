@@ -19,7 +19,7 @@ public class BuildingTile extends Tile {
     }
 
     public void setVisual(String picture) throws FileNotFoundException {
-        Image image = new Image(new FileInputStream("resources/polis/newtiles/" + picture));
+        Image image = new Image("/polis/newtiles/" + picture);
         dx = -0.5 * image.getWidth() + image.getWidth()/2;
         dy = 0.5 * (image.getWidth() - image.getHeight()) - image.getHeight()/2;
         setImage(image);

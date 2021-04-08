@@ -17,6 +17,8 @@ public class Game extends Drawer {
 
     public Game(Buttons buttons, Sound sound) throws FileNotFoundException {
 
+        setFocusTraversable(true);
+
         setPrefSize(CELL_SIZE*2*DIM,CELL_SIZE*DIM);
 
         this.buttons = buttons;
@@ -34,6 +36,8 @@ public class Game extends Drawer {
         for(int i = 0; i < DIM/2; i++){
             tiles.addTile("road", i, DIM/2-1, true);
         }
+
+
 
     }
 

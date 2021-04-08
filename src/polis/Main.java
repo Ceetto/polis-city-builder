@@ -18,7 +18,6 @@ public class Main extends Application {
         stage.setMinWidth(650);
         Scene startScreen = new Scene(new StartPane(stage), 1400, 787.5);
         startScreen.getStylesheets().addAll(getClass().getResource("startScreen/StartPane.css").toExternalForm());
-
         stage.setScene(startScreen);
 
         stage.setTitle("Polis - 2021 © Universiteit Gent");

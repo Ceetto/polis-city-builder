@@ -19,7 +19,7 @@ public class Tile extends ImageView {
     }
 
     public void setGroundImage() throws FileNotFoundException {
-        Image image = new Image(new FileInputStream("resources/polis/newtiles/ground.png"));
+        Image image = new Image("/polis/newtiles/ground.png");
         setImage(image);
     }
 

@@ -22,7 +22,7 @@ public class SoundButton extends ToggleButton {
 
         setMaxSize(50,60);
         setFocusTraversable(false);
-        setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/on.png"))));
+        setGraphic(new ImageView(new Image("/polis/buttons/on.png")));
 
         pics.add("mute.png");
         pics.add("on.png");
@@ -40,7 +40,7 @@ public class SoundButton extends ToggleButton {
 
     public void clicked() throws FileNotFoundException {
         String next = pics.poll();
-        setGraphic(new ImageView(new Image(new FileInputStream("resources/polis/buttons/" + next))));
+        setGraphic(new ImageView(new Image("/polis/buttons/" + next)));
         pics.add(next);
     }
 

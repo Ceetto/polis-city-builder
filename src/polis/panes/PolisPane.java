@@ -25,7 +25,9 @@ public class PolisPane extends Pane {
 
         viewport.setSensitiveMargin(50);
         viewport.setFocusTraversable(true);
-        buttons.setFocusTraversable(false);
+        //buttons.setFocusTraversable(true);
+
+        setOnKeyReleased(buttons::handleKeyReleased);
 
         setPrefSize(4096, 2048);
         setMinSize(1080, 607);

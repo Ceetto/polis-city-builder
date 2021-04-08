@@ -30,7 +30,9 @@ public class StartPane extends StackPane {
         setStyle("-fx-background-color: SKYBLUE");
 
         ImageView title = new ImageView();
-        title.setImage(new Image(new FileInputStream("resources/polis/other/titlescreen.png")));
+        Image image = new Image("/polis/other/titlescreen.png");
+        //title.setImage(new Image(new FileInputStream("resources/polis/other/titlescreen.png")));
+        title.setImage(image);
 
         setAlignment(Pos.TOP_CENTER);
         setPrefSize(1080, 607);

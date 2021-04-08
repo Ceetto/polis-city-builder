@@ -15,8 +15,11 @@ public class Drawer extends StackPane {
     protected int DIM;
 
     public Drawer() {
+        //ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties props = new Properties();
         try(FileReader reader = new FileReader("resources/polis/properties/settings.properties")){
-            Properties props = new Properties();
+        //try(InputStream reader = ClassLoader.getSystemResourceAsStream("resources/polis/properties/settings.properties")) {
+
             props.load(reader);
             this.DIM = Integer.parseInt(props.get("field.size").toString());
         } catch (Exception e){

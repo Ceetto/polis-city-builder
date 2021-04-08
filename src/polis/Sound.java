@@ -14,6 +14,7 @@ public class Sound {
 
     public Sound(){
         Media media = new Media(new File("resources/polis/bgm/bgm-1.mp3").toURI().toString());
+        //Media media = new Media("/polis/bgm/bgm-1.mp3");
         mainTheme = new MediaPlayer(media);
         mainTheme.setCycleCount(AudioClip.INDEFINITE);
     }
