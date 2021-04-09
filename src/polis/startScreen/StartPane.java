@@ -64,7 +64,6 @@ public class StartPane extends StackPane {
         start.setOnAction(e -> {
             try {
                 if(Integer.parseInt(sizeInput.getText()) > 69 || Integer.parseInt(sizeInput.getText()) <= 0){
-                    System.out.println("invalid field size");
                     invalid.setVisible(true);
                 } else {
                     try (OutputStream output = new FileOutputStream("resources/polis/properties/settings.properties")) {

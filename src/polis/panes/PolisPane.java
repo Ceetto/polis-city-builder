@@ -41,8 +41,6 @@ public class PolisPane extends Pane {
         widthProperty().addListener((obs, oldval, newval) -> {
             viewport.setPrefWidth((double) newval);
             mute.relocate((double) newval -100 , 10);
-            System.out.println(mute.getLayoutX());
-            System.out.println(newval);
         });
 
         heightProperty().addListener((obs, oldval, newval) -> {
