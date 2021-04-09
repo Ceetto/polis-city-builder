@@ -18,6 +18,7 @@ public class PolisPane extends Pane {
 
 
         this.mute = mute;
+        mute.setTranslateX(0);
         Game game = new Game(buttons, mute.getSound());
 
         Viewport viewport = new Viewport(game, 0.5);
@@ -39,7 +40,9 @@ public class PolisPane extends Pane {
 
         widthProperty().addListener((obs, oldval, newval) -> {
             viewport.setPrefWidth((double) newval);
-            mute.relocate((double)newval/2 - 45, 5);
+            mute.relocate((double) newval -100 , 10);
+            System.out.println(mute.getLayoutX());
+            System.out.println(newval);
         });
 
         heightProperty().addListener((obs, oldval, newval) -> {
