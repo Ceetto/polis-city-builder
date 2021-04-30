@@ -1,10 +1,8 @@
-package polis.panes.tiles;
+package polis.game.gameLogic.tiles;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import polis.game.gameLogic.GameView;
 
 public class Tile extends ImageView {
     protected final int r;
@@ -13,12 +11,13 @@ public class Tile extends ImageView {
     protected double dx;
     protected double dy;
 
+
     public Tile(int r, int c){
         this.r = r;
         this.c = c;
     }
 
-    public void setGroundImage() throws FileNotFoundException {
+    public void setGroundImage(){
         Image image = new Image("/polis/newtiles/ground.png");
         setImage(image);
     }

@@ -10,19 +10,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import polis.Sound;
-import polis.panes.PolisPane;
-import polis.panes.buttons.SoundButton;
+import polis.game.PolisPane;
+import polis.game.buttons.SoundButton;
 
 import java.io.*;
 import java.util.Properties;
 
 public class StartPane extends StackPane {
 
-    Stage window;
+    final Stage window;
 
-    Sound sound = new Sound();
+    final Sound sound = new Sound();
 
-    public StartPane(Stage main) throws FileNotFoundException {
+    public StartPane(Stage main){
         sound.mainTheme();
 
         this.window = main;
@@ -63,22 +63,12 @@ public class StartPane extends StackPane {
         start.setPrefSize(169,40);
         start.setOnAction(e -> {
             try {
-                if(Integer.parseInt(sizeInput.getText()) > 69 || Integer.parseInt(sizeInput.getText()) <= 0){
-                    invalid.setVisible(true);
-                } else {
-                    try (OutputStream output = new FileOutputStream("resources/polis/properties/settings.properties")) {
-                        Properties prop = new Properties();
-
-                        prop.setProperty("field.size", sizeInput.getText());
-                        prop.store(output, null);
-
-
-                    } catch (IOException io) {
-                        io.printStackTrace();
-                    }
-
+                int fieldSize = Integer.parseInt(sizeInput.getText());
+                if(fieldSize > 0 && fieldSize <= 69) {
                     sound.click();
-                    window.setScene(new Scene(new PolisPane(mute), window.getWidth(), window.getHeight()));
+                    window.setScene(new Scene(new PolisPane(mute, fieldSize), window.getWidth(), window.getHeight()));
+                } else {
+                    invalid.setVisible(true);
                 }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
@@ -94,9 +84,7 @@ public class StartPane extends StackPane {
             mute.setTranslateY(10);
         });
 
-        widthProperty().addListener((obs, oldval, newval) -> {
-            mute.setTranslateX((double)newval/2-50);
-        });
+        widthProperty().addListener((obs, oldval, newval) -> mute.setTranslateX((double)newval/2-50));
 
 
         getChildren().addAll(title, sizeInput, size, start, invalid, mute);

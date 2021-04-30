@@ -1,22 +1,22 @@
-package polis.panes.buttons;
+package polis.game.buttons;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import polis.panes.Game;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import polis.game.gameLogic.Game;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class PlayButton extends ToggleButton {
 
     private final Queue<String> pics;
-    private Game game;
+    private final Game game;
+    private boolean playing = false;
 
-    public PlayButton(Game game) throws FileNotFoundException {
+    public PlayButton(Game game){
         this.game = game;
 
         setMaxSize(50,60);
@@ -28,18 +28,20 @@ public class PlayButton extends ToggleButton {
         pics.add("play.png");
 
         setOnAction(e -> {
-            try {
-                clicked();
-            } catch (FileNotFoundException fileNotFoundException) {
-                fileNotFoundException.printStackTrace();
-            }
+            clicked();
         });
     }
 
-    public void clicked() throws FileNotFoundException {
+    public void clicked() {
         String next = pics.poll();
         setGraphic(new ImageView(new Image("/polis/buttons/" + next)));
         pics.add(next);
+        playing = !playing;
+        if(playing){
+            game.getSimulation().playSimulation();
+        } else {
+            game.getSimulation().stopSimulation();
+        }
     }
 
 }

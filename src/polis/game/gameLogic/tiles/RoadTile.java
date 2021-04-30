@@ -1,16 +1,13 @@
-package polis.panes.tiles;
+package polis.game.gameLogic.tiles;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class RoadTile extends Tile {
     private int level;
     private final boolean unbreakable;
 
-    public RoadTile(int r, int c, int level, boolean unbreakable) throws FileNotFoundException {
+    public RoadTile(int r, int c, int level, boolean unbreakable){
         super(r,c);
         this.dx = 0;
         this.dy = 0;
@@ -19,19 +16,19 @@ public class RoadTile extends Tile {
         setVisual();
     }
 
-    public void setVisual() throws FileNotFoundException {
+    public void setVisual(){
         setImage(new Image("/polis/newtiles/road-" + level + ".png"));
     }
 
-    public void updateLevel(int[][] roadsPlaced, int DIM) throws FileNotFoundException {
+    public void updateLevel(RoadTile[][] roadsPlaced, int DIM){
         level = 0;
-        if(r-1 >= 0 && roadsPlaced[r-1][c] == 1)
+        if(r-1 >= 0 && roadsPlaced[r-1][c] != null)
             level++;
-        if(c+1 < DIM && roadsPlaced[r][c+1] == 1)
+        if(c+1 < DIM && roadsPlaced[r][c+1] != null)
             level+=2;
-        if(r+1 < DIM && roadsPlaced[r+1][c] == 1)
+        if(r+1 < DIM && roadsPlaced[r+1][c] != null)
             level+=4;
-        if(c-1 >= 0 && roadsPlaced[r][c-1] == 1)
+        if(c-1 >= 0 && roadsPlaced[r][c-1] != null)
             level+=8;
         setVisual();
     }

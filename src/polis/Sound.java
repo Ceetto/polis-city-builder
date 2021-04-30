@@ -8,7 +8,7 @@ import java.io.File;
 
 public class Sound {
 
-    MediaPlayer mainTheme;
+    final MediaPlayer mainTheme;
 
     private boolean mute = false;
 

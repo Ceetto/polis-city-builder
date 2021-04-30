@@ -1,20 +1,20 @@
-package polis.panes;
+package polis.game.mouse;
 
 import javafx.scene.layout.Pane;
 
 import java.io.FileNotFoundException;
 
-public class mouseListener extends Pane {
-    Game game;
+public class MouseListener extends Pane {
+    private final MouseModel mouseEvents;
 
-    public mouseListener(Game game){
-        this.game = game;
+    public MouseListener(MouseModel mouseEvents){
+        this.mouseEvents = mouseEvents;
 
-        setOnMouseMoved(game::cursorMoved);
+        setOnMouseMoved(mouseEvents::cursorMoved);
 
         setOnMouseClicked(e -> {
             try {
-                game.clicked();
+                mouseEvents.clicked();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -23,11 +23,11 @@ public class mouseListener extends Pane {
 
         setOnDragDetected(e -> startFullDrag());
 
-        setOnMouseDragEntered(game::dragStart);
-        setOnMouseDragged(game::dragging);
+        setOnMouseDragEntered(mouseEvents::dragStart);
+        setOnMouseDragged(mouseEvents::dragging);
         setOnMouseDragExited(e -> {
             try {
-                game.dragEnd();
+                mouseEvents.dragEnd();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }

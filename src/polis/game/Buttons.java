@@ -1,18 +1,17 @@
-package polis.panes;
+package polis.game;
 
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import polis.panes.buttons.BuildButton;
+import polis.game.buttons.BuildButton;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Buttons extends GridPane {
 
-    List<BuildButton> buildButtons = new ArrayList<>(List.of(
+    private final List<BuildButton> buildButtons = new ArrayList<>(List.of(
             new BuildButton("residence.png", "lbuild", "res", this),
             new BuildButton("industry.png", "lbuild", "ind", this),
             new BuildButton("commerce.png", "lbuild", "com", this),
@@ -24,7 +23,7 @@ public class Buttons extends GridPane {
     String cstatus = "select";
     String bstatus;
 
-    public Buttons() throws FileNotFoundException {
+    public Buttons() {
 
         setAlignment(Pos.TOP_LEFT);
         setPrefSize(100,100);
@@ -40,9 +39,6 @@ public class Buttons extends GridPane {
         add(buildButtons.get(5), 1,3);
 
         buildButtons.get(5).setSelected(true);
-
-
-
     }
 
     public void setStatus(String cstatus, String bstatus){

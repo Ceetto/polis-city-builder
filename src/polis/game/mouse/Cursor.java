@@ -1,9 +1,12 @@
-package polis.panes;
+package polis.game.mouse;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import polis.game.gameLogic.Drawer;
+import polis.game.gameLogic.GameView;
+import polis.game.gameLogic.TilesModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +15,21 @@ public class Cursor extends Drawer {
 
     private int row;
     private int column;
-    private final Tiles tiles;
+    private final TilesModel tilesModel;
+    private final GameView tiles;
 
     private final List<Node> cursorTiles = new ArrayList<>();
 
 
-    public Cursor(Tiles tiles){
+    public Cursor(TilesModel tilesModel, GameView tiles, int DIM){
+        super(DIM);
         setAlignment(Pos.TOP_CENTER);
 
         setPrefSize(CELL_SIZE*2*DIM,CELL_SIZE*DIM);
 
+        this.tilesModel = tilesModel;
         this.tiles = tiles;
     }
-
 
     public void mouseMoved(MouseEvent e, String status){
         double cx = (e.getX());
@@ -45,7 +50,7 @@ public class Cursor extends Drawer {
                 addPoly(row, column, size, tiles, Color.rgb(0, 0, 0, 0), Color.valueOf("white"), 5.0, this);
             } else if (status.equals("del")) {
                 addPoly(row, column, size, tiles, Color.rgb(0, 0, 0, 0), Color.rgb(255, 0, 0, 0.75), 5.0, this);
-            } else if (tiles.spotFree(row, column, size)) {
+            } else if (tilesModel.spotFree(row, column, size)) {
                 if (status.equals("sbuild") || status.equals("lbuild")) {
                     addPoly(row, column, size, tiles, Color.rgb(0, 127, 255, 0.5), Color.valueOf("white"), 0.0, this);
                 }
@@ -55,18 +60,16 @@ public class Cursor extends Drawer {
         }
     }
 
-    public void drag(List<Game.Coord> coords, int size){
+    public void drag(List<MouseModel.Coord> coords, int size){
         tiles.getChildren().removeAll(cursorTiles);
-        for(Game.Coord coord:coords){
-            if (tiles.spotFree(coord.getR(), coord.getC(), size)) {
+        for(MouseModel.Coord coord:coords){
+            if (tilesModel.spotFree(coord.getR(), coord.getC(), size)) {
                 addPoly(coord.getR(), coord.getC(), size, tiles, Color.rgb(0, 127, 255, 0.5), Color.valueOf("white"), 0.0, this);
             } else {
                 addPoly(coord.getR(), coord.getC(), size, tiles, Color.rgb(255, 0, 0, 0.5), Color.valueOf("white"), 0.0, this);
             }
         }
     }
-
-
 
     public int getRow() {
         return row;

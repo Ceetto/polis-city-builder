@@ -14,9 +14,5 @@
     <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="JavaFX" level="application" />
-    <orderEntry type="library" exported="" name="javafx-sdk-11.0" level="project" />
-    <orderEntry type="library" exported="" name="org.apache.derby:derbyclient:10.14.2.0" level="project" />
-    <orderEntry type="library" exported="" name="org.xerial:sqlite-jdbc:3.25.2" level="project" />
-    <orderEntry type="library" exported="" name="org.jdom:jdom2:2.0.6" level="project" />
   </component>
 </module>

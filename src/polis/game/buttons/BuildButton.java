@@ -1,22 +1,15 @@
-package polis.panes.buttons;
+package polis.game.buttons;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import polis.panes.Buttons;
-
-import java.io.FileNotFoundException;
+import polis.game.Buttons;
 
 public class BuildButton extends ToggleButton {
 
-    String ctype;
-    String btype;
-    public BuildButton(String picture, String ctype, String btype, Buttons buttons) throws FileNotFoundException {
-        this.ctype = ctype;
-        this.btype = btype;
+    public BuildButton(String picture, String ctype, String btype, Buttons buttons){
         this.setMinSize(70,40);
         this.setFocusTraversable(false);
-        //FileInputStream input = new FileInputStream("resources/polis/buttons/" + picture);
         Image image = new Image("/polis/buttons/" + picture);
         ImageView imageView = new ImageView(image);
         this.setGraphic(imageView);
