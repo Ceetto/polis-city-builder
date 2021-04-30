@@ -3,8 +3,6 @@ package polis.game.buttons;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import polis.game.gameLogic.Game;
 
 import java.util.LinkedList;
@@ -27,9 +25,7 @@ public class PlayButton extends ToggleButton {
         pics.add("pause.png");
         pics.add("play.png");
 
-        setOnAction(e -> {
-            clicked();
-        });
+        setOnAction(e -> clicked());
     }
 
     public void clicked() {

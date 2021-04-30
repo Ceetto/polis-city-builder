@@ -9,7 +9,7 @@ public class Inhabitant extends Actor{
     private final int houseC;
     private final int inhabNum;
 
-    public Inhabitant(int r, int c, int age, String type, float cellSize, Residence house, int houseR, int houseC, int inhabNum) {
+    Inhabitant(int r, int c, int age, String type, float cellSize, Residence house, int houseR, int houseC, int inhabNum) {
         super(r, c, age, type, cellSize);
         this.house = house;
         this.houseR = houseR;

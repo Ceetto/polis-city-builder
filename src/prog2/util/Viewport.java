@@ -70,20 +70,6 @@ public class Viewport extends Pane {
         this.sensitiveMargin = sensitiveMargin;
     }
 
-    /**
-     * Hoeveel milliseconden er verlopen tussen elke verschuiving
-     */
-    public void setMoveInterval(int moveInterval) {
-        this.moveInterval = moveInterval;
-    }
-
-    /**
-     * Hoeveel pixels de client verschuift bij elke verschuiving
-     */
-    public void setMoveDistance(double moveDistance) {
-        this.moveDistance = moveDistance;
-    }
-
     private void handleKeyReleased(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case LEFT:

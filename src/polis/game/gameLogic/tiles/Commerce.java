@@ -24,6 +24,7 @@ public class Commerce extends BuildingTile{
     private final ArrayList<Actor> workers = new ArrayList<>();
     private final ArrayList<Actor> clients = new ArrayList<>();
 
+    private boolean exists = true;
     public Commerce(String picture, int r, int c, TilesModel model) {
         super(picture, r, c, model);
         setProperties(
@@ -35,13 +36,13 @@ public class Commerce extends BuildingTile{
                 Double.parseDouble(lvlProps.getProperty("commercial.level2to3")),
                 Double.parseDouble(lvlProps.getProperty("commercial.level3to2"))
         );
-        System.out.println(capacity);
         updateCapacity();
     }
 
     public void init(){
         addMaxStats(1);
         addStats(1);
+        exists = true;
     }
 
     private void updateCapacity(){
@@ -73,10 +74,11 @@ public class Commerce extends BuildingTile{
     }
 
     public void removeWorker(Actor actor){
-        workers.remove(actor);
-        model.getStats().addJobs(-1);
+        if(exists) {
+            workers.remove(actor);
+            model.getStats().addJobs(-1);
+        }
     }
-
 
     public void addClient(Actor actor){
         clients.add(actor);
@@ -87,10 +89,12 @@ public class Commerce extends BuildingTile{
     }
 
     public void removeClient(Actor actor){
-        clients.remove(actor);
-        goods --;
-        model.getStats().addClients(-1);
-        model.getStats().addGoods(-1);
+        if(exists) {
+            clients.remove(actor);
+            goods--;
+            model.getStats().addClients(-1);
+            model.getStats().addGoods(-1);
+        }
     }
 
 
@@ -99,7 +103,7 @@ public class Commerce extends BuildingTile{
         model.getStats().addGoods(1);
     }
 
-    public void goodTrade(){
+    private void goodTrade(){
         addMaxStats(-1);
         addStats(-1);
         capacity *= goodTrade;
@@ -109,7 +113,7 @@ public class Commerce extends BuildingTile{
         addStats(1);
     }
 
-    public void badTrade(){
+    private void badTrade(){
         addMaxStats(-1);
         addStats(-1);
         capacity *= badTrade;
@@ -119,13 +123,13 @@ public class Commerce extends BuildingTile{
         addStats(1);
     }
 
-    public void addMaxStats(int fac){
+    private void addMaxStats(int fac){
         model.getStats().addMaxGoods(Math.floor(goodsCapacity)*fac);
         model.getStats().addMaxClients(Math.floor(capacity)*fac);
         model.getStats().addMaxJobs(Math.floor(workersCapacity)*fac);
     }
 
-    public void addStats(int fac){
+    private void addStats(int fac){
         model.getStats().addGoods(goods*fac);
         model.getStats().addClients(clients.size()*fac);
         model.getStats().addJobs(workers.size()*fac);
@@ -136,6 +140,7 @@ public class Commerce extends BuildingTile{
         super.deleteBuilding(pane);
         addMaxStats(-1);
         addStats(-1);
+        exists = false;
     }
     
 

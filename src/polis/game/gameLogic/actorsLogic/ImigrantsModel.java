@@ -5,17 +5,17 @@ import polis.game.gameLogic.actors.Actor;
 import polis.game.gameLogic.actors.Sleeper;
 import polis.game.gameLogic.tiles.Residence;
 
-import java.util.Random;
-
+/**
+ * migranten updaten ook de spawnrate
+ */
 public class ImigrantsModel extends ActActors{
 
-    Random r = new Random();
     private final int sleeperAge = Integer.parseInt(engineProps.getProperty("sleeper.age"));
 
-    private int initialSpawnRate = Integer.parseInt(engineProps.getProperty("region.initial.rate"));
-    private double incRate = Double.parseDouble(engineProps.getProperty("region.factor.recovery"));
-    private double decRate = Double.parseDouble(engineProps.getProperty("region.factor.slow.down"));
-    private int slowestRate = Integer.parseInt(engineProps.getProperty("region.slowest.rate"));
+    private final int initialSpawnRate = Integer.parseInt(engineProps.getProperty("region.initial.rate"));
+    private final double incRate = Double.parseDouble(engineProps.getProperty("region.factor.recovery"));
+    private final double decRate = Double.parseDouble(engineProps.getProperty("region.factor.slow.down"));
+    private final int slowestRate = Integer.parseInt(engineProps.getProperty("region.slowest.rate"));
     private int spawnRate = initialSpawnRate;
 
     public ImigrantsModel(ActorsModel model, GameView gameView) {
@@ -24,7 +24,6 @@ public class ImigrantsModel extends ActActors{
 
     @Override
     public void act(Actor actor) {
-
         Residence house = (Residence) findBuilding(actor, "residence", "living");
 
         if(house != null && house.hasRoom("living")){

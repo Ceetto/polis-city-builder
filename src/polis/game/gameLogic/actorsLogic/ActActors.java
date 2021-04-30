@@ -2,7 +2,6 @@ package polis.game.gameLogic.actorsLogic;
 
 import polis.game.gameLogic.GameView;
 import polis.game.gameLogic.actors.Actor;
-import polis.game.gameLogic.actors.Inhabitant;
 import polis.game.gameLogic.actors.Shopper;
 import polis.game.gameLogic.actors.Sleeper;
 import polis.game.gameLogic.tiles.BuildingTile;
@@ -10,25 +9,28 @@ import polis.game.gameLogic.tiles.BuildingTile;
 import java.io.InputStream;
 import java.util.*;
 
-public abstract class ActActors {
+/**
+ * bovenklasse voor de logica van actors.
+ */
+abstract class ActActors {
 
-    protected final ActorsModel model;
+    final ActorsModel model;
 
-    protected final GameView gameView;
+    final GameView gameView;
     private final Random r = new Random();
-    protected final Map<ActorsModel.Dirs, int[]> directions = Map.of(
+    private final Map<ActorsModel.Dirs, int[]> directions = Map.of(
             ActorsModel.Dirs.NORTH, new int[]{-1, 0},
             ActorsModel.Dirs.SOUTH, new int[]{1,0},
             ActorsModel.Dirs.EAST, new int[]{0,1},
             ActorsModel.Dirs.WEST, new int[]{0,-1}
     );
 
-    protected final Properties lvlProps  = new Properties();
-    protected final Properties engineProps = new Properties();
+    private final Properties lvlProps  = new Properties();
+    final Properties engineProps = new Properties();
     private final int shopperAge;
     private final int sleeperAge;
 
-    public ActActors(ActorsModel model, GameView gameView){
+    ActActors(ActorsModel model, GameView gameView){
         this.model = model;
         this.gameView = gameView;
 
@@ -55,7 +57,7 @@ public abstract class ActActors {
         }
     }
 
-    public void move(Actor actor){
+    void move(Actor actor){
         if(canMoveToTile(actor, actor.getDir())){
             gameView.getChildren().remove(actor);
             actor.setPos(actor.getR() + directions.get(actor.getDir())[0], actor.getC() + directions.get(actor.getDir())[1]);
@@ -75,16 +77,16 @@ public abstract class ActActors {
 
     }
 
-    public boolean canMoveToTile(Actor actor, ActorsModel.Dirs dir){
+    private boolean canMoveToTile(Actor actor, ActorsModel.Dirs dir){
         return withinBounds(actor.getR() + directions.get(dir)[0], actor.getC() + directions.get(dir)[1])
                 && model.getRoadsPlaced()[actor.getR() + directions.get(dir)[0]][actor.getC() + directions.get(dir)[1]] != null;
     }
 
-    public boolean withinBounds(int r, int c){
+    private boolean withinBounds(int r, int c){
         return r >= 0 && r < gameView.getDIM() && c >= 0 && c < gameView.getDIM();
     }
 
-    public BuildingTile findBuilding(Actor actor, String building, String option){
+    BuildingTile findBuilding(Actor actor, String building, String option){
         ActorsModel.Dirs left = actor.getDir().left();
         ActorsModel.Dirs right = actor.getDir().right();
 
@@ -118,7 +120,7 @@ public abstract class ActActors {
         return destination;
     }
 
-    public void sleepIfDone(Actor actor){
+    void sleepIfDone(Actor actor){
         move(actor);
         if(actor.getAge() <= 0){
             model.removeActor(actor);
@@ -128,7 +130,7 @@ public abstract class ActActors {
         }
     }
 
-    public void workThenShop(Actor actor){
+    void workThenShop(Actor actor){
         actor.age();
         if(actor.getAge() <= 0){
             model.removeActor(actor);

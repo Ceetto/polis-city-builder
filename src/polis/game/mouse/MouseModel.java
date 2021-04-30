@@ -3,7 +3,6 @@ package polis.game.mouse;
 import javafx.scene.input.MouseEvent;
 import polis.game.gameLogic.Game;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class MouseModel {
         game.getGameCursor().mouseMoved(e, game.getButtons().getCstatus());
     }
 
-    public void clicked() throws FileNotFoundException {
+    public void clicked() {
         if (!dragging && game.getGameCursor().getRow() >= 0 && game.getGameCursor().getRow() < game.getDIM()
         && game.getGameCursor().getColumn() >= 0 && game.getGameCursor().getColumn() < game.getDIM()) {
             switch (game.getButtons().getCstatus()) {
@@ -55,16 +54,16 @@ public class MouseModel {
         }
     }
 
-    int sdr; //start drag row
-    int sdc; //start drag column
+    private int sdr; //start drag row
+    private int sdc; //start drag column
     private final List<Coord> coords = new ArrayList<>();
-    boolean dragging = false;
+    private boolean dragging = false;
 
     static class Coord{
         private final int r;
         private final int c;
 
-        public Coord(int r, int c){
+        Coord(int r, int c){
             this.r = r;
             this.c = c;
         }
@@ -135,7 +134,7 @@ public class MouseModel {
         }
     }
 
-    public void dragEnd() throws FileNotFoundException {
+    public void dragEnd() {
         if (game.getButtons().getCstatus().equals("sbuild") || game.getButtons().getCstatus().equals("lbuild")) {
             for (Coord tile : coords) {
                 game.getGameView().addTile(game.getButtons().getBstatus(), tile.getR(), tile.getC(), false);

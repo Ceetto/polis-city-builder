@@ -20,8 +20,8 @@ public class Buttons extends GridPane {
             new BuildButton("selection.png", "select", "sel", this)
     ));
 
-    String cstatus = "select";
-    String bstatus;
+    private String cstatus = "select";
+    private String bstatus;
 
     public Buttons() {
 

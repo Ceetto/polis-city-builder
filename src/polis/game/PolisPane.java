@@ -7,21 +7,17 @@ import polis.game.buttons.SoundButton;
 import polis.game.gameLogic.Game;
 import prog2.util.Viewport;
 
-import java.io.IOException;
-
 /**
  * hoofd-pane van het spel. Dit is de directe parent van de viewport en alle GUI's. Dit is de grandparent van alles in
  * de viewport
  */
 public class PolisPane extends Pane {
     final Buttons buttons = new Buttons();
-    final SoundButton mute;
     final Statistics stats;
 
-    public PolisPane(SoundButton mute, int DIM) throws IOException {
+    public PolisPane(SoundButton mute, int DIM) {
         setStyle("-fx-background-color: SKYBLUE");
 
-        this.mute = mute;
         mute.setTranslateX(0);
         stats = new Statistics();
         Game game = new Game(buttons, mute.getSound(), DIM, stats);

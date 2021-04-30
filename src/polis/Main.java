@@ -15,7 +15,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         stage.setMinHeight(700);
         stage.setMinWidth(650);
         Scene startScreen = new Scene(new StartPane(stage), 1400, 787.5);

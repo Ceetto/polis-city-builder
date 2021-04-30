@@ -14,21 +14,21 @@ import java.util.Properties;
  */
 public class BuildingTile extends Tile {
 
-    protected int level;
+    private int level;
     private final String type;
 
-    protected final TilesModel model;
+    final TilesModel model;
 
-    protected Properties lvlProps = new Properties();
-    protected Properties engineProps = new Properties();
+    Properties lvlProps = new Properties();
+    Properties engineProps = new Properties();
 
-    protected double minCapacity;
-    protected double capacity;
-    protected double maxCapacity;
-    protected double lvl1to2;
-    protected double lvl2to1;
-    protected double lvl2to3;
-    protected double lvl3to2;
+    private double minCapacity;
+    double capacity;
+    private double maxCapacity;
+    private double lvl1to2;
+    private double lvl2to1;
+    private double lvl2to3;
+    private double lvl3to2;
 
     public BuildingTile(String picture, int r, int c, TilesModel model){
         super(r,c);
@@ -49,8 +49,8 @@ public class BuildingTile extends Tile {
         }
     }
     
-    public void setProperties( double minCapacity, double capacity, double maxCapacity, double lvl1to2, double lvl2to1,
-                              double lvl2to3, double lvl3to2){
+    void setProperties(double minCapacity, double capacity, double maxCapacity, double lvl1to2, double lvl2to1,
+                       double lvl2to3, double lvl3to2){
         this.minCapacity = minCapacity;
         this.capacity = capacity;
         this.maxCapacity = maxCapacity;
@@ -65,7 +65,7 @@ public class BuildingTile extends Tile {
      */
     public void init(){}
 
-    public void setVisual(String picture) {
+    private void setVisual(String picture) {
         Image image = new Image("/polis/newtiles/" + picture);
         dx = -0.5 * image.getWidth() + image.getWidth()/2;
         dy = 0.5 * (image.getWidth() - image.getHeight()) - image.getHeight()/2;
@@ -87,7 +87,7 @@ public class BuildingTile extends Tile {
         setVisual(type + "-" + level + ".png");
     }
 
-    public void updateLevel(List<Actor> actors){
+    void updateLevel(List<Actor> actors){
         if(capacity < minCapacity){
             capacity = minCapacity;
         } else if (capacity > maxCapacity) {
@@ -138,7 +138,7 @@ public class BuildingTile extends Tile {
     /**
      * afrondingsmethode voor stats paneel
      */
-    protected double round(double value) {
+    double round(double value) {
         int precision = 2;
         int scale = (int) Math.pow(10, precision);
         return Math.floor(value * scale) / scale;

@@ -16,12 +16,13 @@ public class Industry extends BuildingTile{
     private final double goodsDelivered = Double.parseDouble(engineProps.getProperty("factor.goods.delivered"));
     private final double goodsNotDelivered = Double.parseDouble(engineProps.getProperty("factor.goods.not.delivered"));
 
+    private boolean exists = true;
     public Industry(String picture, int r, int c, TilesModel model) {
         super(picture, r, c, model);
 
         setProperties(
-                Double.parseDouble(engineProps.getProperty("industrial.capacity.initial")),
                 Double.parseDouble(engineProps.getProperty("industrial.capacity.minimal")),
+                Double.parseDouble(engineProps.getProperty("industrial.capacity.initial")),
                 Double.parseDouble(engineProps.getProperty("industrial.capacity.maximal")),
                 Double.parseDouble(lvlProps.getProperty("industrial.level1to2")),
                 Double.parseDouble(lvlProps.getProperty("industrial.level2to1")),
@@ -33,8 +34,8 @@ public class Industry extends BuildingTile{
     public void init(){
         addMaxStats(1);
         model.getStats().addJobs(workers.size());
+        exists = true;
     }
-
 
     public void addWorker(Actor actor){
         workers.add(actor);
@@ -43,8 +44,10 @@ public class Industry extends BuildingTile{
     }
 
     public void removeWorker(Actor actor){
-        workers.remove(actor);
-        model.getStats().addJobs(-1);
+        if(exists) {
+            workers.remove(actor);
+            model.getStats().addJobs(-1);
+        }
     }
 
     public boolean hasRoom(String option){
@@ -70,9 +73,10 @@ public class Industry extends BuildingTile{
         super.deleteBuilding(pane);
         model.getStats().addJobs(workers.size()*-1);
         addMaxStats(-1);
+        exists = false;
     }
 
-    public void addMaxStats(int fac){
+    private void addMaxStats(int fac){
         model.getStats().addMaxJobs(Math.floor(capacity)*fac);
     }
 

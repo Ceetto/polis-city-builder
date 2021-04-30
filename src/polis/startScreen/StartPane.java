@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import polis.Sound;
 import polis.game.PolisPane;
 import polis.game.buttons.SoundButton;
-import java.io.IOException;
 
 /**
  * Title-screen wanneer het programma start. Van hieruit kan de field size ingesteld worden vooraleer het spel start.
@@ -60,16 +59,12 @@ public class StartPane extends StackPane {
         start.setText("Create World");
         start.setPrefSize(169,40);
         start.setOnAction(e -> {
-            try {
-                int fieldSize = Integer.parseInt(sizeInput.getText());
-                if(fieldSize > 0 && fieldSize <= 69) {
-                    sound.click();
-                    window.setScene(new Scene(new PolisPane(mute, fieldSize), window.getWidth(), window.getHeight()));
-                } else {
-                    invalid.setVisible(true);
-                }
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            int fieldSize = Integer.parseInt(sizeInput.getText());
+            if(fieldSize > 0 && fieldSize <= 69) {
+                sound.click();
+                window.setScene(new Scene(new PolisPane(mute, fieldSize), window.getWidth(), window.getHeight()));
+            } else {
+                invalid.setVisible(true);
             }
         });
 

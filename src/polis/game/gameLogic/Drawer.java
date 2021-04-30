@@ -21,7 +21,7 @@ public class Drawer extends StackPane {
     }
 
     //tekent een gewone polygon
-    public void addPoly(int r, int c, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth, Cursor cursor){
+    protected void addPoly(int r, int c, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth, Cursor cursor){
         Polygon poly = new Polygon(
                 0, 0,
                 CELL_SIZE * size, 0.5 * CELL_SIZE * size,

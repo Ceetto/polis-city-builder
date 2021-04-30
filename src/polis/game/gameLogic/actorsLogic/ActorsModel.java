@@ -102,10 +102,6 @@ public class ActorsModel {
         return tilesModel.getBuildingsPlaced();
     }
 
-    public List<Actor> getActors(){
-        return actors;
-    }
-
     public int getSpawnRate(){
         return acting.get("Immigrant").getSpawnRate();
     }

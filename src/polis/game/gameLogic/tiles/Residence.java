@@ -23,8 +23,8 @@ public class Residence extends BuildingTile{
         super(picture, r, c, model);
         
         setProperties(
-                Double.parseDouble(engineProps.getProperty("residential.capacity.initial")),
                 Double.parseDouble(engineProps.getProperty("residential.capacity.minimal")),
+                Double.parseDouble(engineProps.getProperty("residential.capacity.initial")),
                 Double.parseDouble(engineProps.getProperty("residential.capacity.maximal")),
                 Double.parseDouble(lvlProps.getProperty("residential.level1to2")),
                 Double.parseDouble(lvlProps.getProperty("residential.level2to1")),
@@ -36,6 +36,21 @@ public class Residence extends BuildingTile{
     public void init(){
         addMaxStats(1);
         model.getStats().addInhabs(inhabitants.size());
+    }
+
+    public void updateLevel(List<Actor> actors){
+        super.updateLevel(actors);
+
+        if(inhabitants.size() > capacity){
+            List<Actor> remove = new ArrayList<>();
+            for(Actor actor:inhabitants){
+                if(actor.getInhabNum() > capacity){
+                    remove.add(actor);
+                }
+            }
+            inhabitants.removeAll(remove);
+            model.getStats().addInhabs(-remove.size());
+        }
     }
 
     public void addInhabitant(Actor inhabitant){

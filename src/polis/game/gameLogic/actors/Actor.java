@@ -21,7 +21,7 @@ public class Actor extends Circle {
 
     private ActorsModel.Dirs dir;
 
-    public Actor(int r, int c, int age, String type, float cellSize){
+    Actor(int r, int c, int age, String type, float cellSize){
         super(0, cellSize/2, cellSize/6);
         setFill(Paint.valueOf("transparent"));
         setViewOrder(-r - c - 1.5);
