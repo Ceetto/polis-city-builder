@@ -1,7 +1,6 @@
 package polis.game.gameLogic.tiles;
 
 import javafx.scene.layout.Pane;
-import polis.game.gameLogic.GameView;
 import polis.game.gameLogic.TilesModel;
 import polis.game.gameLogic.actors.Actor;
 
@@ -13,6 +12,7 @@ public class Industry extends BuildingTile{
 
     private double capacity = Double.parseDouble(engineProps.getProperty("industrial.capacity.initial"));
     private final double minCapacity = Double.parseDouble(engineProps.getProperty("industrial.capacity.minimal"));
+    private final double maxCapacity = Double.parseDouble(engineProps.getProperty("industrial.capacity.maximal"));
     private final double goodsDelivered = Double.parseDouble(engineProps.getProperty("factor.goods.delivered"));
     private final double goodsNotDelivered = Double.parseDouble(engineProps.getProperty("factor.goods.not.delivered"));
     private final double lvl1to2 = Double.parseDouble(lvlProps.getProperty("industrial.level1to2"));
@@ -26,13 +26,15 @@ public class Industry extends BuildingTile{
     }
 
     public void init(){
-        model.getStats().addMaxJobs(capacity);
+        addMaxStats(1);
         model.getStats().addJobs(workers.size());
     }
 
     public void updateLevel(){
         if(capacity < minCapacity){
             capacity = minCapacity;
+        } else if(capacity > maxCapacity){
+            capacity = maxCapacity;
         }
 
         if((level == 0 && workers.size() > 0) ||
@@ -63,33 +65,37 @@ public class Industry extends BuildingTile{
     }
 
     public void goodsDelivered(){
-        model.getStats().addMaxJobs(-capacity);
+        addMaxStats(-1);
         capacity *= goodsDelivered;
         updateLevel();
-        model.getStats().addMaxJobs(capacity);
+        addMaxStats(1);
     }
 
     public void goodsNotDelivered(){
-        model.getStats().addMaxJobs(-capacity);
+        addMaxStats(-1);
         capacity *= goodsNotDelivered;
         updateLevel();
-        model.getStats().addMaxJobs(capacity);
+        addMaxStats(1);
     }
 
     @Override
     public void deleteBuilding(Pane pane) {
         super.deleteBuilding(pane);
         model.getStats().addJobs(workers.size()*-1);
-        model.getStats().addMaxJobs(capacity*-1);
+        addMaxStats(-1);
+    }
+
+    public void addMaxStats(int fac){
+        model.getStats().addMaxJobs(Math.floor(capacity)*fac);
     }
 
     @Override
     public String statsText() {
-        return "Jobs: " + workers.size() + " / " + round(capacity,1);
+        return "Jobs: " + workers.size() + " / " + round(capacity);
     }
 
     @Override
     public String titleText() {
-        return "Industrieel @ " + r + ":" + c;
+        return "Industrial @ " + r + ":" + c;
     }
 }

@@ -12,13 +12,13 @@ public class Statistics extends Pane {
     BuildingTile selected = null;
 
     private int inhabs = 0;
-    private double maxInhabs = 0.0;
+    private int maxInhabs = 0;
     private int jobs = 0;
-    private double maxJobs = 0.0;
+    private int maxJobs = 0;
     private int goods = 0;
-    private double maxGoods = 0.0;
+    private int maxGoods = 0;
     private int clients = 0;
-    private double maxClients = 0.0;
+    private int maxClients = 0;
 
     public Statistics(){
         setStyle("-fx-background-color: white;" +
@@ -39,13 +39,12 @@ public class Statistics extends Pane {
     }
 
     public void updateStats(){
-        //System.out.println(selected);
         if(selected == null){
             title.setText("STATISTIEKEN");
-            stats.setText("Bewoners: " + inhabs + " / " + round(maxInhabs, 1) + "\n" +
-                    "Jobs: " + jobs + " / " + round(maxJobs,1) + "\n" +
-                    "Goederen: " + goods + " / " + round(maxGoods, 1) + "\n" +
-                    "Klanten: " + clients + " / " + round(maxClients, 1)
+            stats.setText("Inhabitants: " + inhabs + " / " + maxInhabs + "\n" +
+                    "Jobs: " + jobs + " / " + maxJobs + "\n" +
+                    "Goods: " + goods + " / " + maxGoods + "\n" +
+                    "Customers: " + clients + " / " + maxClients
             );
         } else {
             title.setText(selected.titleText());
@@ -98,8 +97,9 @@ public class Statistics extends Pane {
         updateStats();
     }
 
-    private double round (double value, int precision) {
+    public double round(double value) {
+        int precision = 2;
         int scale = (int) Math.pow(10, precision);
-        return (double) Math.round(value * scale) / scale;
+        return Math.floor(value * scale) / scale;
     }
 }

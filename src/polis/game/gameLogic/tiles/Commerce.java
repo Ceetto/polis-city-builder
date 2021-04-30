@@ -13,6 +13,7 @@ public class Commerce extends BuildingTile{
     private final double clientsPerWorker = Double.parseDouble(engineProps.getProperty("customers.per.trader"));
     private double clientCapacity = Double.parseDouble(engineProps.getProperty("commercial.capacity.initial"));
     private final double minClientCapacity = Double.parseDouble(engineProps.getProperty("commercial.capacity.minimal"));
+    private final double maxClientCapacity = Double.parseDouble(engineProps.getProperty("commercial.capacity.maximal"));
     private final double goodsPerCustomer = Double.parseDouble(engineProps.getProperty("goods.per.customer"));
     private double goodsCapacity;
     private int goods = 0;
@@ -47,6 +48,8 @@ public class Commerce extends BuildingTile{
     public void updateLevel(){
         if(clientCapacity < minClientCapacity){
             clientCapacity = minClientCapacity;
+        } else if (clientCapacity > maxClientCapacity) {
+            clientCapacity = maxClientCapacity;
         }
 
         if((level == 0 && workers.size() > 0) ||
@@ -129,9 +132,9 @@ public class Commerce extends BuildingTile{
     }
 
     public void addMaxStats(int fac){
-        model.getStats().addMaxGoods(goodsCapacity*fac);
-        model.getStats().addMaxClients(clientCapacity*fac);
-        model.getStats().addMaxJobs(workersCapacity*fac);
+        model.getStats().addMaxGoods(Math.floor(goodsCapacity)*fac);
+        model.getStats().addMaxClients(Math.floor(clientCapacity)*fac);
+        model.getStats().addMaxJobs(Math.floor(workersCapacity)*fac);
     }
 
     public void addStats(int fac){
@@ -146,16 +149,17 @@ public class Commerce extends BuildingTile{
         addMaxStats(-1);
         addStats(-1);
     }
+    
 
     @Override
     public String statsText() {
-        return "Jobs: " + workers.size() + " / " + round(workersCapacity, 1) + "\n" +
-                "Goederen: " + goods + " / " + round(goodsCapacity, 1) + "\n" +
-                "Klanten: " + clients.size() + " / " + round(clientCapacity, 1);
+        return "Jobs: " + workers.size() + " / " + round(workersCapacity) + "\n" +
+                "Goods: " + goods + " / " + round(goodsCapacity) + "\n" +
+                "Customers: " + clients.size() + " / " + round(clientCapacity);
     }
 
     @Override
     public String titleText() {
-        return "Commercieel @ " + r + ":" + c;
+        return "Commercial @ " + r + ":" + c;
     }
 }

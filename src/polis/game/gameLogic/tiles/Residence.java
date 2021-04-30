@@ -1,7 +1,6 @@
 package polis.game.gameLogic.tiles;
 
 import javafx.scene.layout.Pane;
-import polis.game.gameLogic.GameView;
 import polis.game.gameLogic.TilesModel;
 import polis.game.gameLogic.actors.Actor;
 
@@ -12,6 +11,7 @@ public class Residence extends BuildingTile{
 
     private double capacity = Double.parseDouble(engineProps.getProperty("residential.capacity.initial"));
     private final double minCapacity = Double.parseDouble(engineProps.getProperty("residential.capacity.minimal"));
+    private final double maxCapacity = Double.parseDouble(engineProps.getProperty("residential.capacity.maximal"));
     private final double jobFound = Double.parseDouble(engineProps.getProperty("factor.job.found"));
     private final double jobNotFound = Double.parseDouble(engineProps.getProperty("factor.job.not.found"));
     private final double shopFound = Double.parseDouble(engineProps.getProperty("factor.shop.found"));
@@ -28,13 +28,15 @@ public class Residence extends BuildingTile{
     }
 
     public void init(){
-        model.getStats().addMaxInhabs(capacity);
+        addMaxStats(1);
         model.getStats().addInhabs(inhabitants.size());
     }
 
     public void updateLevel(){
         if(capacity < minCapacity){
             capacity = minCapacity;
+        } else if (capacity >= maxCapacity){
+            capacity = maxCapacity;
         }
 
         if((level == 0 && inhabitants.size() > 0) ||
@@ -62,8 +64,8 @@ public class Residence extends BuildingTile{
 
     public void addInhabitant(Actor inhabitant){
         inhabitants.add(inhabitant);
-        updateLevel();
         model.getStats().addInhabs(1);
+        updateLevel();
     }
 
     public boolean hasRoom(String option){
@@ -71,32 +73,39 @@ public class Residence extends BuildingTile{
     }
 
     public void jobFound(){
-        model.getStats().addMaxInhabs(-capacity);
+        addMaxStats(-1);
         capacity *= jobFound;
         updateLevel();
-        model.getStats().addMaxInhabs(capacity);
+        addMaxStats(1);
     }
 
     public void jobNotFound(){
-        model.getStats().addMaxInhabs(-capacity);
+        addMaxStats(-1);
         capacity *= jobNotFound;
         updateLevel();
-        model.getStats().addMaxInhabs(capacity);
+        addMaxStats(1);
     }
 
     public void shopFound(){
-        model.getStats().addMaxInhabs(-capacity);
+        addMaxStats(-1);
         capacity *= shopFound;
         updateLevel();
-        model.getStats().addMaxInhabs(capacity);
+        addMaxStats(1);
     }
 
     public void shopNotFound(){
-        model.getStats().addMaxInhabs(-capacity);
+        addMaxStats(-1);
         capacity *= shopNotFound;
         updateLevel();
-        model.getStats().addMaxInhabs(capacity);
+        addMaxStats(1);
     }
+
+    public void addMaxStats(int fac){
+        model.getStats().addMaxInhabs(Math.floor(capacity)*fac);
+    }
+
+
+
 
     public List<Actor> getInhabitants() {
         return inhabitants;
@@ -106,16 +115,16 @@ public class Residence extends BuildingTile{
     public void deleteBuilding(Pane pane) {
         super.deleteBuilding(pane);
         model.getStats().addInhabs(inhabitants.size()*-1);
-        model.getStats().addMaxInhabs(capacity*-1);
+        addMaxStats(-1);
     }
 
     @Override
     public String statsText() {
-        return "Bewoners: " + inhabitants.size() + " / " + round(capacity, 1);
+        return "Inhabitants: " + inhabitants.size() + " / " + round(capacity);
     }
 
     @Override
     public String titleText() {
-        return "Residentieel @ " + r + ":" + c;
+        return "Residential @ " + r + ":" + c;
     }
 }

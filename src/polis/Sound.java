@@ -13,8 +13,7 @@ public class Sound {
     private boolean mute = false;
 
     public Sound(){
-        Media media = new Media(new File("resources/polis/bgm/bgm-1.mp3").toURI().toString());
-        //Media media = new Media("/polis/bgm/bgm-1.mp3");
+        Media media = new Media(getClass().getResource("/polis/bgm/bgm-0.mp3").toExternalForm());
         mainTheme = new MediaPlayer(media);
         mainTheme.setCycleCount(AudioClip.INDEFINITE);
     }
@@ -41,7 +40,7 @@ public class Sound {
 
     public void sfx(String sfx){
         if(!mute) {
-            Media media = new Media(new File("resources/polis/sfx/" + sfx + ".mp3").toURI().toString());
+            Media media = new Media(getClass().getResource("/polis/sfx/" + sfx + ".mp3").toExternalForm());
             AudioClip player = new AudioClip(media.getSource());
             player.play();
         }

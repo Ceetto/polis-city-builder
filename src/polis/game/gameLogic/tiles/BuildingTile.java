@@ -84,8 +84,9 @@ public class BuildingTile extends Tile {
         return "";
     }
 
-    protected double round (double value, int precision) {
+    protected double round(double value) {
+        int precision = 2;
         int scale = (int) Math.pow(10, precision);
-        return (double) Math.round(value * scale) / scale;
+        return Math.floor(value * scale) / scale;
     }
 }
