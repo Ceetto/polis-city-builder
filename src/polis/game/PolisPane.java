@@ -9,16 +9,17 @@ import prog2.util.Viewport;
 
 import java.io.IOException;
 
+/**
+ * hoofd-pane van het spel. Dit is de directe parent van de viewport en alle GUI's. Dit is de grandparent van alles in
+ * de viewport
+ */
 public class PolisPane extends Pane {
     final Buttons buttons = new Buttons();
     final SoundButton mute;
     final Statistics stats;
-    private int DIM;
 
     public PolisPane(SoundButton mute, int DIM) throws IOException {
         setStyle("-fx-background-color: SKYBLUE");
-
-        this.DIM = DIM;
 
         this.mute = mute;
         mute.setTranslateX(0);

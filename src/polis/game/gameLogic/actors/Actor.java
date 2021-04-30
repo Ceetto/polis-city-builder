@@ -4,13 +4,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import polis.game.gameLogic.actorsLogic.ActorsModel;
 import polis.game.gameLogic.tiles.BuildingTile;
-import polis.game.gameLogic.tiles.Commerce;
 import polis.game.gameLogic.tiles.Residence;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * basic actor
+ */
 public class Actor extends Circle {
 
     private int r;
@@ -90,5 +91,4 @@ public class Actor extends Circle {
     public int getInhabNum(){
         return 0;
     }
-
 }

@@ -4,16 +4,19 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
+import java.util.Objects;
 
+/**
+ * Speelt muziek en sound effects af
+ */
 public class Sound {
 
-    final MediaPlayer mainTheme;
-
+    private final MediaPlayer mainTheme;
     private boolean mute = false;
 
     public Sound(){
-        Media media = new Media(getClass().getResource("/polis/bgm/bgm-0.mp3").toExternalForm());
+        Media media = new Media(Objects.requireNonNull(getClass().getResource("/polis/bgm/bgm-0.mp3"))
+                .toExternalForm());
         mainTheme = new MediaPlayer(media);
         mainTheme.setCycleCount(AudioClip.INDEFINITE);
     }
@@ -40,19 +43,15 @@ public class Sound {
 
     public void sfx(String sfx){
         if(!mute) {
-            Media media = new Media(getClass().getResource("/polis/sfx/" + sfx + ".mp3").toExternalForm());
+            Media media = new Media(Objects.requireNonNull(getClass().getResource("/polis/sfx/" + sfx + ".mp3"))
+                    .toExternalForm());
             AudioClip player = new AudioClip(media.getSource());
             player.play();
         }
     }
 
     public void mute(){
-        if(!mute) {
-            mainTheme.setMute(true);
-            mute = true;
-        }else {
-            mainTheme.setMute(false);
-            mute = false;
-        }
+        mute = !mute;
+        mainTheme.setMute(mute);
     }
 }

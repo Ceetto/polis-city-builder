@@ -4,11 +4,12 @@ import javafx.scene.layout.Pane;
 
 import java.io.FileNotFoundException;
 
+/**
+ * luistert naar de mouse events en geeft dit door aan het mouseModel
+ */
 public class MouseListener extends Pane {
-    private final MouseModel mouseEvents;
 
     public MouseListener(MouseModel mouseEvents){
-        this.mouseEvents = mouseEvents;
 
         setOnMouseMoved(mouseEvents::cursorMoved);
 

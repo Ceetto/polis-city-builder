@@ -12,14 +12,13 @@ import javafx.stage.Stage;
 import polis.Sound;
 import polis.game.PolisPane;
 import polis.game.buttons.SoundButton;
+import java.io.IOException;
 
-import java.io.*;
-import java.util.Properties;
-
+/**
+ * Title-screen wanneer het programma start. Van hieruit kan de field size ingesteld worden vooraleer het spel start.
+ */
 public class StartPane extends StackPane {
-
     final Stage window;
-
     final Sound sound = new Sound();
 
     public StartPane(Stage main){
@@ -31,7 +30,6 @@ public class StartPane extends StackPane {
 
         ImageView title = new ImageView();
         Image image = new Image("/polis/other/titlescreen.png");
-        //title.setImage(new Image(new FileInputStream("resources/polis/other/titlescreen.png")));
         title.setImage(image);
 
         setAlignment(Pos.TOP_CENTER);
@@ -75,7 +73,6 @@ public class StartPane extends StackPane {
             }
         });
 
-
         heightProperty().addListener((obs, oldval, newval) -> {
             sizeInput.setTranslateY(435);
             size.setTranslateY(420);
@@ -85,7 +82,6 @@ public class StartPane extends StackPane {
         });
 
         widthProperty().addListener((obs, oldval, newval) -> mute.setTranslateX((double)newval/2-50));
-
 
         getChildren().addAll(title, sizeInput, size, start, invalid, mute);
     }

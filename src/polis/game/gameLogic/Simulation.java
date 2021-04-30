@@ -1,6 +1,5 @@
 package polis.game.gameLogic;
 
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -13,19 +12,18 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.Random;
 
+/**
+ * Motor van de simulatie.
+ */
 public class Simulation {
 
-    private Random r = new Random();
-
+    private final Random r = new Random();
     private final ActorsModel actorsModel;
     private final Statistics stats;
-
     private final Timeline t;
-
     protected Properties engineProps = new Properties();
     private int spawnRate;
     private int currentRate;
-
     private int tick = 0;
 
     public Simulation(ActorsModel actorsModel, Statistics stats){
@@ -50,7 +48,7 @@ public class Simulation {
         stats.updateStats();
         if(tick%currentRate == 0){
             actorsModel.addImigrant();
-            this.spawnRate = actorsModel.getSpawnrate();
+            this.spawnRate = actorsModel.getSpawnRate();
             currentRate = r.nextInt(spawnRate+1)+1;
         }
         tick++;

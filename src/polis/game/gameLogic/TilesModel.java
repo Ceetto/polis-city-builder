@@ -3,10 +3,12 @@ package polis.game.gameLogic;
 import polis.Sound;
 import polis.game.Statistics;
 import polis.game.gameLogic.tiles.*;
-
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * Model die alle data bevat rond waar welke tiles zijn.
+ */
 public class TilesModel{
     final Map<String, String> buildingTypes = Map.of(
             "res", "residence-0.png",
@@ -15,9 +17,9 @@ public class TilesModel{
     );
 
     private final GameView gameView;
-    private final int[][] usedTiles;
-    private final RoadTile[][] roadsPlaced;
-    private final BuildingTile[][] buildingsPlaced;
+    private final int[][] usedTiles; //tiles in gebruik
+    private final RoadTile[][] roadsPlaced; //alle roads
+    private final BuildingTile[][] buildingsPlaced; //alle buildings
     private final Sound sound;
     private final Statistics stats;
 
@@ -36,6 +38,9 @@ public class TilesModel{
         }
     }
 
+    /**
+     * voegt een road of building tile toe.
+     */
     public void addTile(String status, int r, int c, boolean unbreakable){
         if (r >= 0 && r < gameView.getDIM() && c >= 0 && c < gameView.getDIM()) {
             if (status.equals("road")) {
@@ -57,6 +62,9 @@ public class TilesModel{
         }
     }
 
+    /**
+     * geeft een nieuwe building op plaats r, c terug van een bepaald type.
+     */
     public BuildingTile makeBuilding(int r, int c, String status){
         Map<String, BuildingTile> buildings = Map.of(
                 "res", new Residence(buildingTypes.get(status), r, c, this),
@@ -67,6 +75,9 @@ public class TilesModel{
         return buildings.get(status);
     }
 
+    /**
+     * verwijdert een tile.
+     */
     public void removeTile(int r, int c){
         if(roadsPlaced[r][c] != null && !roadsPlaced[r][c].isUnbreakable()){
             roadsPlaced[r][c].deleteRoad(gameView);
@@ -84,33 +95,36 @@ public class TilesModel{
         }
     }
 
+    /**
+     * Methodes om het level van een building te verhogen/verlagen.
+     */
     public void levelUpTile(int r, int c){
         BuildingTile evolved = buildingsPlaced[r][c];
         if(evolved != null) {
             evolved.levelUp();
-            buildingsPlaced[r][c].deleteBuilding(gameView);
-            BuildingTile tile = buildingsPlaced[r][c];
-            setBuildingSpot(tile.getR(), tile.getC(), null);
-            setBuildingSpot(tile.getR(), tile.getC(), evolved);
-            evolved.init();
-            gameView.addTile(evolved);
-            sound.upgrade();
+            levelUpDown(r, c, evolved);
         }
     }
-
     public void levelDownTile(int r, int c){
         BuildingTile devolved = buildingsPlaced[r][c];
         if(devolved != null) {
             devolved.levelDown();
-            buildingsPlaced[r][c].deleteBuilding(gameView);
-            BuildingTile tile = buildingsPlaced[r][c];
-            setBuildingSpot(tile.getR(), tile.getC(), null);
-            setBuildingSpot(tile.getR(), tile.getC(), devolved);
-            devolved.init();
-            gameView.addTile(devolved);
+            levelUpDown(r, c, devolved);
         }
     }
+    private void levelUpDown(int r, int c, BuildingTile newTile){
+        buildingsPlaced[r][c].deleteBuilding(gameView);
+        BuildingTile tile = buildingsPlaced[r][c];
+        setBuildingSpot(tile.getR(), tile.getC(), null);
+        setBuildingSpot(tile.getR(), tile.getC(), newTile);
+        newTile.init();
+        sound.upgrade();
+        gameView.addTile(newTile);
+    }
 
+    /**
+     * Update het uiterlijk van straten rond een bepaalde straat
+     */
     public void updateRoadsLevel(int r, int c){
         for(int i = r-1; i <= r+1 && i < gameView.getDIM(); i++){
             for(int j = c-1; j <= c+1 && j < gameView.getDIM(); j++){

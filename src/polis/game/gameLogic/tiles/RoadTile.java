@@ -3,6 +3,9 @@ package polis.game.gameLogic.tiles;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
+/**
+ * basic road tile
+ */
 public class RoadTile extends Tile {
     private int level;
     private final boolean unbreakable;

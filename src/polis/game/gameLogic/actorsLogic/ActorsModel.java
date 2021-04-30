@@ -4,13 +4,15 @@ import polis.game.gameLogic.GameView;
 import polis.game.gameLogic.TilesModel;
 import polis.game.gameLogic.actors.Actor;
 import polis.game.gameLogic.actors.Imigrant;
-import polis.game.gameLogic.actors.Inhabitant;
 import polis.game.gameLogic.tiles.BuildingTile;
 import polis.game.gameLogic.tiles.RoadTile;
 
 import java.io.InputStream;
 import java.util.*;
 
+/**
+ * model die data over alle actors bevat.
+ */
 public class ActorsModel {
 
     private final List<Actor> actors = new ArrayList<>();
@@ -20,11 +22,9 @@ public class ActorsModel {
     private final GameView gameView;
     private final TilesModel tilesModel;
 
-    private final Properties lvlProps = new Properties();
-    private final Properties engineProps = new Properties();
-
     private final int imigrantAge;
 
+    //richtingen die een actor kan uitgaan
     public enum Dirs {
         NORTH,
         EAST,
@@ -36,9 +36,9 @@ public class ActorsModel {
         }
         public Dirs left(){ return vals[(this.ordinal()+3) % vals.length]; }
         public Dirs back(){ return vals[(this.ordinal()+2) % vals.length]; }
-
     }
 
+    //map die het type actor linkt aan een nieuw model die de logica rond deze actor bevat
     private final Map<String, ActActors> acting = new HashMap<>();
 
     public ActorsModel(GameView gameView, TilesModel tilesModel){
@@ -54,12 +54,7 @@ public class ActorsModel {
         acting.put("Goods", new GoodsModel(this, gameView));
         acting.put("Client", new ClientModel(this, gameView));
 
-        try(InputStream in = BuildingTile.class.getResourceAsStream("/polis/properties/levels.properties")){
-            lvlProps.load(in);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
+        Properties engineProps = new Properties();
         try(InputStream in2 = BuildingTile.class.getResourceAsStream("/polis/properties/engine.properties")){
             engineProps.load(in2);
         } catch (Exception e){
@@ -85,6 +80,9 @@ public class ActorsModel {
         gameView.getChildren().remove(actor);
     }
 
+    /**
+     * laat alle actors acten.
+     */
     public void actActors(){
         gone = new ArrayList<>();
         newActors = new ArrayList<>();
@@ -108,7 +106,7 @@ public class ActorsModel {
         return actors;
     }
 
-    public int getSpawnrate(){
+    public int getSpawnRate(){
         return acting.get("Immigrant").getSpawnRate();
     }
 }

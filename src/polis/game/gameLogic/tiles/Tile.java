@@ -2,15 +2,16 @@ package polis.game.gameLogic.tiles;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import polis.game.gameLogic.GameView;
 
+/**
+ * basic tile
+ */
 public class Tile extends ImageView {
     protected final int r;
     protected final int c;
 
     protected double dx;
     protected double dy;
-
 
     public Tile(int r, int c){
         this.r = r;

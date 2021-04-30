@@ -2,8 +2,9 @@ package polis.game.gameLogic;
 
 import javafx.geometry.Pos;
 
-import java.io.IOException;
-
+/**
+ * View waar alles van het spel op getekend wordt.
+ */
 public class GameView extends Drawer {
     public GameView(int DIM){
         super(DIM);

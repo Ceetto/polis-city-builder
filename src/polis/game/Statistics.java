@@ -5,6 +5,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import polis.game.gameLogic.tiles.BuildingTile;
 
+/**
+ * Statistieken paneel.
+ */
 public class Statistics extends Pane {
 
     Label title = new Label();
@@ -21,9 +24,7 @@ public class Statistics extends Pane {
     private int maxClients = 0;
 
     public Statistics(){
-        setStyle("-fx-background-color: white;" +
-                " -fx-border-color: black;" +
-                "-fx-border-width: 1px");
+        setStyle("-fx-background-color: white;" + " -fx-border-color: black;" + "-fx-border-width: 1px");
         setPrefSize(300, 169);
         setWidth(300);
         setHeight(169);
@@ -95,11 +96,5 @@ public class Statistics extends Pane {
     public void setSelected(BuildingTile tile){
         selected = tile;
         updateStats();
-    }
-
-    public double round(double value) {
-        int precision = 2;
-        int scale = (int) Math.pow(10, precision);
-        return Math.floor(value * scale) / scale;
     }
 }

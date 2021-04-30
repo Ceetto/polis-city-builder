@@ -7,29 +7,35 @@ import polis.game.gameLogic.actors.Actor;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * commerciële zone.
+ */
 public class Commerce extends BuildingTile{
 
     private double workersCapacity;
     private final double clientsPerWorker = Double.parseDouble(engineProps.getProperty("customers.per.trader"));
-    private double clientCapacity = Double.parseDouble(engineProps.getProperty("commercial.capacity.initial"));
-    private final double minClientCapacity = Double.parseDouble(engineProps.getProperty("commercial.capacity.minimal"));
-    private final double maxClientCapacity = Double.parseDouble(engineProps.getProperty("commercial.capacity.maximal"));
     private final double goodsPerCustomer = Double.parseDouble(engineProps.getProperty("goods.per.customer"));
     private double goodsCapacity;
     private int goods = 0;
 
     private final double goodTrade = Double.parseDouble(engineProps.getProperty("factor.good.trade"));
     private final double badTrade = Double.parseDouble(engineProps.getProperty("factor.bad.trade"));
-    private final double lvl1to2 = Double.parseDouble(lvlProps.getProperty("commercial.level1to2"));
-    private final double lvl2to1 = Double.parseDouble(lvlProps.getProperty("commercial.level2to1"));
-    private final double lvl2to3 = Double.parseDouble(lvlProps.getProperty("commercial.level2to3"));
-    private final double lvl3to2 = Double.parseDouble(lvlProps.getProperty("commercial.level3to2"));
 
     private final ArrayList<Actor> workers = new ArrayList<>();
     private final ArrayList<Actor> clients = new ArrayList<>();
 
     public Commerce(String picture, int r, int c, TilesModel model) {
         super(picture, r, c, model);
+        setProperties(
+                Double.parseDouble(engineProps.getProperty("commercial.capacity.minimal")),
+                Double.parseDouble(engineProps.getProperty("commercial.capacity.initial")),
+                Double.parseDouble(engineProps.getProperty("commercial.capacity.maximal")),
+                Double.parseDouble(lvlProps.getProperty("commercial.level1to2")),
+                Double.parseDouble(lvlProps.getProperty("commercial.level2to1")),
+                Double.parseDouble(lvlProps.getProperty("commercial.level2to3")),
+                Double.parseDouble(lvlProps.getProperty("commercial.level3to2"))
+        );
+        System.out.println(capacity);
         updateCapacity();
     }
 
@@ -39,28 +45,10 @@ public class Commerce extends BuildingTile{
     }
 
     private void updateCapacity(){
-        workersCapacity = clientCapacity / clientsPerWorker;
-        goodsCapacity = clientCapacity * goodsPerCustomer;
+        workersCapacity = capacity / clientsPerWorker;
+        goodsCapacity = capacity * goodsPerCustomer;
         if(goods > goodsCapacity)
             goods = (int) goodsCapacity;
-    }
-
-    public void updateLevel(){
-        if(clientCapacity < minClientCapacity){
-            clientCapacity = minClientCapacity;
-        } else if (clientCapacity > maxClientCapacity) {
-            clientCapacity = maxClientCapacity;
-        }
-
-        if((level == 0 && workers.size() > 0) ||
-                (level == 1 && clientCapacity >= lvl1to2) ||
-                (level == 2 && clientCapacity >= lvl2to3)
-        ){
-            model.levelUpTile(r, c);
-        } else if((level == 2 && clientCapacity <= lvl2to1) ||
-                level == 3 && clientCapacity <= lvl3to2){
-            model.levelDownTile(r, c);
-        }
     }
 
     @Override
@@ -80,7 +68,7 @@ public class Commerce extends BuildingTile{
 
     public void addWorker(Actor actor){
         workers.add(actor);
-        updateLevel();
+        updateLevel(workers);
         model.getStats().addJobs(1);
     }
 
@@ -92,7 +80,7 @@ public class Commerce extends BuildingTile{
 
     public void addClient(Actor actor){
         clients.add(actor);
-        if(clients.size() >= Math.floor(clientCapacity)){
+        if(clients.size() >= Math.floor(capacity)){
             goodTrade();
         }
         model.getStats().addClients(1);
@@ -114,8 +102,8 @@ public class Commerce extends BuildingTile{
     public void goodTrade(){
         addMaxStats(-1);
         addStats(-1);
-        clientCapacity *= goodTrade;
-        updateLevel();
+        capacity *= goodTrade;
+        updateLevel(workers);
         updateCapacity();
         addMaxStats(1);
         addStats(1);
@@ -124,8 +112,8 @@ public class Commerce extends BuildingTile{
     public void badTrade(){
         addMaxStats(-1);
         addStats(-1);
-        clientCapacity *= badTrade;
-        updateLevel();
+        capacity *= badTrade;
+        updateLevel(workers);
         updateCapacity();
         addMaxStats(1);
         addStats(1);
@@ -133,7 +121,7 @@ public class Commerce extends BuildingTile{
 
     public void addMaxStats(int fac){
         model.getStats().addMaxGoods(Math.floor(goodsCapacity)*fac);
-        model.getStats().addMaxClients(Math.floor(clientCapacity)*fac);
+        model.getStats().addMaxClients(Math.floor(capacity)*fac);
         model.getStats().addMaxJobs(Math.floor(workersCapacity)*fac);
     }
 
@@ -155,7 +143,7 @@ public class Commerce extends BuildingTile{
     public String statsText() {
         return "Jobs: " + workers.size() + " / " + round(workersCapacity) + "\n" +
                 "Goods: " + goods + " / " + round(goodsCapacity) + "\n" +
-                "Customers: " + clients.size() + " / " + round(clientCapacity);
+                "Customers: " + clients.size() + " / " + round(capacity);
     }
 
     @Override

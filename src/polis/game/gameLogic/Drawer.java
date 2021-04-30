@@ -9,21 +9,18 @@ import polis.game.gameLogic.actorsLogic.ActorsModel;
 import polis.game.gameLogic.tiles.Tile;
 import polis.game.mouse.Cursor;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
+/**
+ * bovenklasse van veel panes die dingen moeten tekenen en/of DIM en CELL_SIZE values nodig hebben.
+ */
 public class Drawer extends StackPane {
-
-    protected final int CELL_SIZE = 64;
-    protected int DIM;
+    protected static final int CELL_SIZE = 64;
+    protected static int DIM;
 
     public Drawer(int DIM){
-        this.DIM = DIM;
-
+        Drawer.DIM = DIM;
     }
 
+    //tekent een gewone polygon
     public void addPoly(int r, int c, int size, Pane pane, Color fillColor, Color strokeCollor, Double strokeWidth, Cursor cursor){
         Polygon poly = new Polygon(
                 0, 0,
@@ -50,8 +47,8 @@ public class Drawer extends StackPane {
         }
     }
 
+    //tekent een tile (RoadTile, BuildingTile of gewoon Tile (voor field tiles)
     public void addTile(Tile tile) {
-
         int x = CELL_SIZE * (- tile.getR() + tile.getC()) ;
         int y = CELL_SIZE * (tile.getR() + tile.getC()) / 2;
         tile.setTranslateX(x + tile.getDx());
@@ -60,10 +57,10 @@ public class Drawer extends StackPane {
         this.getChildren().add(tile);
     }
 
+    //voegt een actor toe
     public void addActor(Actor actor, Pane pane){
         int dx = 0;
         int dy = 0;
-
         if(actor.getDir() == ActorsModel.Dirs.NORTH){
             dx = 25;
             dy = 13;
@@ -72,10 +69,8 @@ public class Drawer extends StackPane {
             dx = -25;
             dy = 13;
         }
-
         int x = CELL_SIZE * (- actor.getR() + actor.getC());
         int y = CELL_SIZE * (actor.getR() + actor.getC()) / 2;
-
         actor.setTranslateX(x + dx);
         actor.setTranslateY(y + dy);
 
