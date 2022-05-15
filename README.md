@@ -13,6 +13,6 @@ Programming: Jahid Chetti
 
 Extra features:
 ================
--Custom field size (min 1, max 69)
--Drag place buildings
--New and better looking tile assets
+- Custom field size (min 1, max 69)
+- Drag place buildings
+- New and better looking tile assets
