@@ -1,5 +1,8 @@
 Polis - 2021 © Universiteit Gent
 
+This was a project I made as part of a course in my first year of university.
+The goal of the game is to simulate a city by building residencies, industries and commerces.
+
 
 Credits:
 ==========
